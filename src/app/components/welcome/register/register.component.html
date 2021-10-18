@@ -4,7 +4,9 @@
               <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
               <h3>Welcome</h3>
               <p>The best attention here!</p>
-              <input type="submit" name="" value="Login"/><br/>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Login
+              </button>
           </div>
           <div class="col-md-9 register-right">
               <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -16,18 +18,73 @@
                   </li>
               </ul>
               <div class="tab-content" id="myTabContent">
-                  <div #formPatients class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div  #formPatients 
+                        class="tab-pane fade show active" 
+                        id="home" role="tabpanel" 
+                        aria-labelledby="home-tab" 
+                        [formGroup]="form">
                       <h3 class="register-heading">Patients Form</h3>
                       <div class="row register-form">
                           <div class="col-md-6">
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="First Name" value="" />
+                                  <input type="text"
+                                         class="form-control"
+                                         placeholder="First Name"
+                                         value=""
+                                         formControlName="firstName"
+                                         [ngClass]="{'is-invalid': Form.firstName.touched && Form.firstName.errors}"
+                                         required 
+                                         />
+                                  <div *ngIf="Form.firstName.touched && Form.firstName.errors"    
+                                  class="invalid-feedback">
+                                    <div *ngIf="Form.firstName.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.firstName.errors.maxlength">
+                                        40 characters max 
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="Last Name" value="" />
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Last Name"
+                                value=""
+                                formControlName="lastName"
+                                [ngClass]="{'is-invalid': Form.lastName.touched && Form.lastName.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.lastName.touched && Form.lastName.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.lastName.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.lastName.errors.maxlength">
+                                        40 characters max 
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Age" value="" />
+                                <input type="number"
+                                class="form-control"
+                                placeholder="Age"
+                                value=""
+                                formControlName="age"
+                                [ngClass]="{'is-invalid': Form.age.touched && Form.age.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.age.touched && Form.age.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.age.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.age.errors.min">
+                                        +18 
+                                    </div>
+                                    <div *ngIf="Form.age.errors.max">
+                                        menor a 99
+                                    </div>
+                                </div>
                             </div>
                               <div class="form-group">
                                   <input type="text" class="form-control" placeholder="DNI" value="" />

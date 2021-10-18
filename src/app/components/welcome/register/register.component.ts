@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +12,38 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChild('linkSpecialists') linkSpecialists:ElementRef;
   @ViewChild('formSpecialists') formSpecialists:ElementRef;
   @ViewChild('formPatients') formPatients:ElementRef;
-  
-  constructor(private renderer:Renderer2 ) {}
+  form : FormGroup;
+  constructor(private renderer:Renderer2,
+              private fb: FormBuilder ) {}
 
   ngOnInit(): void {
-    
+    this.initForm();
+  }
+
+  initForm():void{
+    this.form = this.fb.group({
+      firstName: ['',[Validators.required, Validators.maxLength(20)]],
+      lastName: ['',[Validators.required, Validators.maxLength(20)]],
+      age: ['',[Validators.required, Validators.min(18), Validators.max(99)]]
+      // region: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(3),Validators.pattern('^[0-9]*$')]],
+      // phone: ['',[Validators.required,Validators.maxLength(7),Validators.pattern('^[0-9]*$')]]
+    });
+  }
+
+  get companyNameControl():AbstractControl{
+    return this.form.get('companyName');
+  }
+
+  get regionControl():AbstractControl{
+    return this.form.get('region');
+  }
+
+  get phoneControl():AbstractControl{
+    return this.form.get('phone');
+  }
+
+  public get Form():any{
+    return this.form.controls;
   }
 
   get LinkPatients():any{
