@@ -31,17 +31,17 @@
                                          class="form-control"
                                          placeholder="First Name"
                                          value=""
-                                         formControlName="firstName"
-                                         [ngClass]="{'is-invalid': Form.firstName.touched && Form.firstName.errors}"
+                                         formControlName="firstNamePatient"
+                                         [ngClass]="{'is-invalid': Form.firstNamePatient.touched && Form.firstNamePatient.errors}"
                                          required 
                                          />
-                                  <div *ngIf="Form.firstName.touched && Form.firstName.errors"    
+                                  <div *ngIf="Form.firstNamePatient.touched && Form.firstNamePatient.errors"    
                                   class="invalid-feedback">
-                                    <div *ngIf="Form.firstName.errors.required">
+                                    <div *ngIf="Form.firstNamePatient.errors.required">
                                         Is required
                                     </div>
-                                    <div *ngIf="Form.firstName.errors.maxlength">
-                                        40 characters max 
+                                    <div *ngIf="Form.firstNamePatient.errors.maxlength">
+                                        20 characters max 
                                     </div>
                                 </div>
                               </div>
@@ -50,17 +50,17 @@
                                 class="form-control"
                                 placeholder="Last Name"
                                 value=""
-                                formControlName="lastName"
-                                [ngClass]="{'is-invalid': Form.lastName.touched && Form.lastName.errors}"
+                                formControlName="lastNamePatient"
+                                [ngClass]="{'is-invalid': Form.lastNamePatient.touched && Form.lastNamePatient.errors}"
                                 required 
                                 />
-                                <div *ngIf="Form.lastName.touched && Form.lastName.errors"    
+                                <div *ngIf="Form.lastNamePatient.touched && Form.lastNamePatient.errors"    
                                 class="invalid-feedback">
-                                    <div *ngIf="Form.lastName.errors.required">
+                                    <div *ngIf="Form.lastNamePatient.errors.required">
                                         Is required
                                     </div>
-                                    <div *ngIf="Form.lastName.errors.maxlength">
-                                        40 characters max 
+                                    <div *ngIf="Form.lastNamePatient.errors.maxlength">
+                                        20 characters max 
                                     </div>
                                 </div>
                               </div>
@@ -69,36 +69,100 @@
                                 class="form-control"
                                 placeholder="Age"
                                 value=""
-                                formControlName="age"
-                                [ngClass]="{'is-invalid': Form.age.touched && Form.age.errors}"
+                                formControlName="agePatient"
+                                [ngClass]="{'is-invalid': Form.agePatient.touched && Form.agePatient.errors}"
                                 required 
                                 />
-                                <div *ngIf="Form.age.touched && Form.age.errors"    
+                                <div *ngIf="Form.agePatient.touched && Form.agePatient.errors"    
                                 class="invalid-feedback">
-                                    <div *ngIf="Form.age.errors.required">
+                                    <div *ngIf="Form.agePatient.errors.required">
                                         Is required
                                     </div>
-                                    <div *ngIf="Form.age.errors.min">
-                                        +18 
-                                    </div>
-                                    <div *ngIf="Form.age.errors.max">
-                                        menor a 99
+                                    <div *ngIf="Form.agePatient.errors.max">
+                                        The patient must be less than 99 years old
                                     </div>
                                 </div>
                             </div>
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="DNI" value="" />
+                                <input type="text"
+                                class="form-control"
+                                placeholder="DNI"
+                                value=""
+                                formControlName="dniPatient"
+                                [ngClass]="{'is-invalid': Form.dniPatient.touched && Form.dniPatient.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.dniPatient.touched && Form.dniPatient.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.dniPatient.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.dniPatient.errors.min">
+                                        DNI must be greater than 10,000,000
+                                    </div>
+                                    <div *ngIf="Form.dniPatient.errors.max">
+                                        DNI must be less than 99.000.000
+                                    </div>
+                                </div>
                               </div>
                           </div>
                           <div class="col-md-6">
                               <div class="form-group">
-                                  <input type="email" class="form-control" placeholder="Your Email" value="" />
+                                <input type="email"
+                                class="form-control"
+                                placeholder="Your Email"
+                                value=""
+                                formControlName="emailPatient"
+                                [ngClass]="{'is-invalid': Form.emailPatient.touched && Form.emailPatient.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.emailPatient.touched && Form.emailPatient.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.emailPatient.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.emailPatient.errors.email">
+                                        invalid email
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Your Password" value="" />
+                                <input type="password"
+                                class="form-control"
+                                placeholder="Your Password"
+                                value=""
+                                formControlName="passwordPatient"
+                                [ngClass]="{'is-invalid': Form.passwordPatient.touched && Form.passwordPatient.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.passwordPatient.touched && Form.passwordPatient.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.passwordPatient.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.passwordPatient.errors.maxlength">
+                                        Password must be less than 20 characters
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                              <input type="text" class="form-control" placeholder="Your Social Work" value="" />
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Your Social Work"
+                                value=""
+                                formControlName="socialWork"
+                                [ngClass]="{'is-invalid': Form.socialWork.touched && Form.socialWork.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.socialWork.touched && Form.socialWork.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.socialWork.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.socialWork.errors.maxlength">
+                                        Social Work must be less than 30 characters
+                                    </div>
+                                </div>
                           </div>
                               <div class="form-group">
                                   <input type="file" class="form-control" placeholder="Photos" value="" />

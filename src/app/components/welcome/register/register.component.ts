@@ -22,24 +22,64 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   initForm():void{
     this.form = this.fb.group({
-      firstName: ['',[Validators.required, Validators.maxLength(20)]],
-      lastName: ['',[Validators.required, Validators.maxLength(20)]],
-      age: ['',[Validators.required, Validators.min(18), Validators.max(99)]]
+      firstNamePatient: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20)
+        ]
+      ],
+      lastNamePatient: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20)
+        ]
+      ],
+      agePatient: [
+        '',
+        [
+          Validators.required,
+          Validators.max(99)
+        ]
+      ],
+      dniPatient: [
+        '',
+        [
+          Validators.required,
+          Validators.min(10000000),
+          Validators.max(99000000)
+        ]
+      ],
+      emailPatient: [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+      passwordPatient: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20)
+        ]
+      ],
+      socialWork: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(30)
+        ]
+      ]
+
       // region: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(3),Validators.pattern('^[0-9]*$')]],
       // phone: ['',[Validators.required,Validators.maxLength(7),Validators.pattern('^[0-9]*$')]]
     });
   }
 
-  get companyNameControl():AbstractControl{
-    return this.form.get('companyName');
-  }
-
-  get regionControl():AbstractControl{
-    return this.form.get('region');
-  }
-
-  get phoneControl():AbstractControl{
-    return this.form.get('phone');
+  get emailPatientControl():AbstractControl{
+    return this.form.get('emailPatient');
   }
 
   public get Form():any{
