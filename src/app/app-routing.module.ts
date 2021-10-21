@@ -5,11 +5,11 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 
 const routes: Routes = [
   {
-    path:'admin',
+    path:'',
     component:WelcomeComponent
   },
   {
-    path:'',
+    path:'admin',
     component:AdminComponent
   }
 ];

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Patient } from 'src/app/models/Patient';
+import { Specialist } from 'src/app/models/specialist';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -9,14 +11,15 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class AdministratorComponent implements OnInit {
 
-  administrators:any[] = [];
-  patients:any[] = [];
-  specialists:any[] = [];
+  administrators:Patient[] = [];
+  patients:Patient[] = [];
+  specialists:Specialist[] = [];
   profileUrl:Observable<any>;
+  @ViewChild('check') checkbox:ElementRef;
   constructor(private readonly userService: UsersService) { }
 
   ngOnInit(): void {
-    this.getAdministrators();
+    // this.getAdministrators();
     this.getSpecialists();
     this.getPatients();
     this.downloadFile();
@@ -24,20 +27,48 @@ export class AdministratorComponent implements OnInit {
 
   getAdministrators():void{
     this.userService.Administrators.subscribe(res => {
-      this.administrators = res;
+      res.forEach(r => {
+        this.administrators.push(r.data());
+      });
     });
   }
 
   getPatients():void{
     this.userService.Patients.subscribe(res => {
-      this.patients = res;
+      res.forEach(r => {
+        let patient:Patient = new Patient(r.id,
+                                r.data().firstName,
+                                r.data().lastName,
+                                r.data().age,
+                                r.data().dni,
+                                r.data().email,
+                                r.data().password,
+                                r.data().socialWork);
+
+        this.patients.push(patient);
+      });
+
     });
+    console.log(this.patients)
   }
 
   getSpecialists():void{
     this.userService.Specialists.subscribe(res => {
-      this.specialists = res;
+      res.forEach(r => {
+        let specialist:Specialist = new Specialist(r.id,
+                                r.data().firstName,
+                                r.data().lastName,
+                                r.data().age,
+                                r.data().dni,
+                                r.data().email,
+                                r.data().password,
+                                r.data().speciality);
+
+        this.specialists.push(specialist);
+      });
     });
+    
+    
   }
 
   downloadFile():void{
@@ -45,6 +76,15 @@ export class AdministratorComponent implements OnInit {
       console.log(res);
       this.profileUrl = res;
     });
+  }
+
+  isChecked():void{
+    const el = this.checkbox.nativeElement.checked;
+    console.log(el); 
+  }
+
+  UpdateSpecialist():void{
+    
   }
 
 }

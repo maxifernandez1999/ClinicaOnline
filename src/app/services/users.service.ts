@@ -7,16 +7,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
-  public patients: Observable<any[]>;
-  public specialists: Observable<any[]>;
-  public administrators: Observable<any[]>;
+  public patients: Observable<any>; //[]
+  public specialists: Observable<any>;
+  public administrators: Observable<any>;
 
 
   constructor(private readonly firestore: AngularFirestore,
               private readonly storage:AngularFireStorage) { 
-    this.patients = firestore.collection('patients').valueChanges();
-    this.specialists = firestore.collection('specialists').valueChanges();
-    this.administrators = firestore.collection('administrators').valueChanges();
+    // this.patients = firestore.collection('patients').valueChanges();
+    // this.specialists = firestore.collection('specialists').valueChanges();
+    // this.administrators = firestore.collection('administrators').valueChanges();
+    this.patients = firestore.collection('patients').get();
+    this.specialists = firestore.collection('specialists').get();
+    this.administrators = firestore.collection('administrators').get();
+  }
+
+  getID(){
+    return this.firestore.collection('patients').get();  
   }
 
   get Patients():any{
@@ -49,6 +56,10 @@ export class UsersService {
     const ref = this.storage.ref('patients/maxi@maxi.com_23456789.png');
     return ref.getDownloadURL();
   }
+
+  // UpdateSpecialist():void{
+  //   firestore.collection("users").doc(doc.id).update({foo: "bar"});
+  // }
 
 
 }

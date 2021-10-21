@@ -12,7 +12,6 @@
                               <th scope="col">Password</th>
                               <th scope="col">Social Work</th>
                               <th scope="col">Photo</th>
-                              <th scope="col">Permits</th>
                         </tr>
                   </thead>
                   <tbody *ngFor="let patient of patients">
@@ -23,9 +22,8 @@
                               <td>{{patient.dni}}</td>
                               <td>{{patient.email}}</td>
                               <td>{{patient.password}}</td>
-                              <td>{{patient.socialWork}}</td>
+                              <td>{{patient.socialWork}}</td>   
                               <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td> 
-                              <td><div class="checkbox mb-3"><input type="checkbox" name="" id=""></div></td>      
                         </tr>
                   </tbody>
             </table>
@@ -46,7 +44,7 @@
                               <th scope="col">Password</th>
                               <th scope="col">Speciality</th>
                               <th scope="col">Photo</th>
-                              <th scope="col">Permits</th>
+                              <th scope="col">Permit Access</th>
                         </tr>
                   </thead>
                   <tbody *ngFor="let specialist of specialists">
@@ -57,9 +55,9 @@
                               <td>{{specialist.dni}}</td>
                               <td>{{specialist.email}}</td>
                               <td>{{specialist.password}}</td>
-                              <td>{{specialist.speciality}}</td>
+                              <!-- <td>{{specialist.speciality}}</td> -->
                               <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td> 
-                              <td><div class="checkbox mb-3"><input type="checkbox" name="" id=""></div></td>      
+                              <td><div  class="checkbox mb-3" (change)="isChecked()"><input #check type="checkbox" name="" id=""></div></td>      
                         </tr>
                   </tbody>
             </table>
