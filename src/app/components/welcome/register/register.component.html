@@ -17,12 +17,12 @@
                       <a #linkSpecialists class="nav-link" id="profile-tab" data-toggle="tab" href="#" (click)="changeFormSpecialists()" role="tab" aria-controls="profile" aria-selected="false">Specialists</a>
                   </li>
               </ul>
-              <div class="tab-content" id="myTabContent">
+              <div [formGroup]="form"  class="tab-content" id="myTabContent">
                   <div  #formPatients 
                         class="tab-pane fade show active" 
                         id="home" role="tabpanel" 
                         aria-labelledby="home-tab" 
-                        [formGroup]="form">
+                        >
                       <h3 class="register-heading">Patients Form</h3>
                       <div class="row register-form">
                           <div class="col-md-6">
@@ -165,9 +165,15 @@
                                 </div>
                           </div>
                               <div class="form-group">
-                                  <input type="file" class="form-control" placeholder="Photos" value="" />
+                                  <input type="file"
+                                  name="file[]"
+                                  (change)="getFilePatient($event)" 
+                                  class="form-control" 
+                                  placeholder="Photos" 
+                                  value="" 
+                                  multiple/>
                               </div>
-                              <input type="submit" class="btnRegister"  value="Register"/>
+                              <input type="button" (click)="addPatient()" class="btnRegister"  value="Register"/>
                           </div>
                       </div>
                   </div>
@@ -176,37 +182,140 @@
                       <div class="row register-form">
                           <div class="col-md-6">
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="First Name" value="" />
+                                <input type="text"
+                                class="form-control"
+                                placeholder="First Name"
+                                value=""
+                                formControlName="firstNameSpecialist"
+                                [ngClass]="{'is-invalid': Form.firstNameSpecialist.touched && Form.firstNameSpecialist.errors}"
+                                required 
+                                />
+                         <div *ngIf="Form.firstNameSpecialist.touched && Form.firstNameSpecialist.errors"    
+                         class="invalid-feedback">
+                           <div *ngIf="Form.firstNameSpecialist.errors.required">
+                               Is required
+                           </div>
+                           <div *ngIf="Form.firstNameSpecialist.errors.maxlength">
+                               20 characters max 
+                           </div>
+                       </div>
                               </div>
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="Last Name" value="" />
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Last Name"
+                                value=""
+                                formControlName="lastNameSpecialist"
+                                [ngClass]="{'is-invalid': Form.lastNameSpecialist.touched && Form.lastNameSpecialist.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.lastNameSpecialist.touched && Form.lastNameSpecialist.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.lastNameSpecialist.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.lastNameSpecialist.errors.maxlength">
+                                        20 characters max 
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="Age *" value="" />
+                                <input type="number"
+                                class="form-control"
+                                placeholder="Age"
+                                value=""
+                                formControlName="ageSpecialist"
+                                [ngClass]="{'is-invalid': Form.ageSpecialist.touched && Form.ageSpecialist.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.ageSpecialist.touched && Form.ageSpecialist.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.ageSpecialist.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.ageSpecialist.errors.max">
+                                        The patient must be less than 99 years old
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="Dni" value="" />
+                                <input type="text"
+                                class="form-control"
+                                placeholder="DNI"
+                                value=""
+                                formControlName="dniSpecialist"
+                                [ngClass]="{'is-invalid': Form.dniSpecialist.touched && Form.dniSpecialist.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.dniSpecialist.touched && Form.dniSpecialist.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.dniSpecialist.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.dniSpecialist.errors.min">
+                                        DNI must be greater than 10,000,000
+                                    </div>
+                                    <div *ngIf="Form.dniSpecialist.errors.max">
+                                        DNI must be less than 99.000.000
+                                    </div>
+                                </div>
                               </div>
                           </div>
                           <div class="col-md-6">
                               <div class="form-group">
-                                  <input type="email" class="form-control" placeholder="Your Email" value="" />
+                                <input type="email"
+                                class="form-control"
+                                placeholder="Your Email"
+                                value=""
+                                formControlName="emailSpecialist"
+                                [ngClass]="{'is-invalid': Form.emailSpecialist.touched && Form.emailSpecialist.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.emailSpecialist.touched && Form.emailSpecialist.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.emailSpecialist.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.emailSpecialist.errors.email">
+                                        invalid email
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                  <input type="password" class="form-control" placeholder="Your Password" value="" />
+                                <input type="password"
+                                class="form-control"
+                                placeholder="Your Password"
+                                value=""
+                                formControlName="passwordSpecialist"
+                                [ngClass]="{'is-invalid': Form.passwordSpecialist.touched && Form.passwordSpecialist.errors}"
+                                required 
+                                />
+                                <div *ngIf="Form.passwordSpecialist.touched && Form.passwordSpecialist.errors"    
+                                class="invalid-feedback">
+                                    <div *ngIf="Form.passwordSpecialist.errors.required">
+                                        Is required
+                                    </div>
+                                    <div *ngIf="Form.passwordSpecialist.errors.maxlength">
+                                        Password must be less than 20 characters
+                                    </div>
+                                </div>
                               </div>
                               <div class="form-group">
-                                  <select class="form-control">
-                                      <option class="hidden"  selected disabled>Select your Specialty</option>
-                                      <option>Ophthalmologist</option>
+                                  <select formControlName="speciality"      class="form-control">
+                                      <option selected>Ophthalmologist</option>
                                       <option>Cardiologyr</option>
                                       <option>Pediatrics</option>
                                   </select>
                               </div>
                               <div class="form-group">
-                                  <input type="file" class="form-control" placeholder="Photo" value="" />
+                                  <input type="file"
+                                        name="file[]"
+                                        (change)="getFileSpecialist($event)"
+                                        class="form-control" placeholder="Photo" 
+                                        value=""
+                                        multiple />
                               </div>
-                              <input type="submit" class="btnRegister"  value="Register"/>
+                              <input type="button" (click)="addSpecialist()"class="btnRegister"  value="Register"/>
                           </div>
                       </div>
                   </div>

@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ClinicaOnline:build:production",
+            "firebaseProject": "clinicaonline-65c8f",
+            "firebaseHostingSite": "clinicaonline-65c8f"
+          }
         }
       }
     }
