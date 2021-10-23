@@ -11,10 +11,12 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AdminModule } from './components/admin/admin.module';
+import { RequestShiftsComponent } from './components/request-shifts/request-shifts.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RequestShiftsComponent
   ],
   imports: [
     BrowserModule,
