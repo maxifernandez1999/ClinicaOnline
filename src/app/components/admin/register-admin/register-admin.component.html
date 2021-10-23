@@ -1,0 +1,161 @@
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Register Administrator</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--*********-->
+        <div [formGroup]="formAdmin"  class="tab-content" id="myTabContent">
+            <div  #formPatients 
+                  class="tab-pane fade show active" 
+                  id="home" role="tabpanel" 
+                  aria-labelledby="home-tab" 
+                  >
+                <div class="row register-form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="First Name"
+                                   value=""
+                                   formControlName="firstName"
+                                   [ngClass]="{'is-invalid': Form.firstName.touched && Form.firstName.errors}"
+                                   required 
+                                   />
+                            <div *ngIf="Form.firstName.touched && Form.firstName.errors"    
+                            class="invalid-feedback">
+                              <div *ngIf="Form.firstName.errors.required">
+                                  Is required
+                              </div>
+                              <div *ngIf="Form.firstName.errors.maxlength">
+                                  20 characters max 
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="text"
+                          class="form-control"
+                          placeholder="Last Name"
+                          value=""
+                          formControlName="lastName"
+                          [ngClass]="{'is-invalid': Form.lastName.touched && Form.lastName.errors}"
+                          required 
+                          />
+                          <div *ngIf="Form.lastName.touched && Form.lastName.errors"    
+                          class="invalid-feedback">
+                              <div *ngIf="Form.lastName.errors.required">
+                                  Is required
+                              </div>
+                              <div *ngIf="Form.lastName.errors.maxlength">
+                                  20 characters max 
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="number"
+                          class="form-control"
+                          placeholder="Age"
+                          value=""
+                          formControlName="age"
+                          [ngClass]="{'is-invalid': Form.age.touched && Form.age.errors}"
+                          required 
+                          />
+                          <div *ngIf="Form.age.touched && Form.age.errors"    
+                          class="invalid-feedback">
+                              <div *ngIf="Form.age.errors.required">
+                                  Is required
+                              </div>
+                              <div *ngIf="Form.age.errors.max">
+                                  The patient must be less than 99 years old
+                              </div>
+                          </div>
+                      </div>
+                        <div class="form-group">
+                          <input type="text"
+                          class="form-control"
+                          placeholder="DNI"
+                          value=""
+                          formControlName="dni"
+                          [ngClass]="{'is-invalid': Form.dni.touched && Form.dni.errors}"
+                          required 
+                          />
+                          <div *ngIf="Form.dni.touched && Form.dni.errors"    
+                          class="invalid-feedback">
+                              <div *ngIf="Form.dni.errors.required">
+                                  Is required
+                              </div>
+                              <div *ngIf="Form.dni.errors.min">
+                                  DNI must be greater than 10,000,000
+                              </div>
+                              <div *ngIf="Form.dni.errors.max">
+                                  DNI must be less than 99.000.000
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <input type="email"
+                          class="form-control"
+                          placeholder="Your Email"
+                          value=""
+                          formControlName="email"
+                          [ngClass]="{'is-invalid': Form.email.touched && Form.email.errors}"
+                          required 
+                          />
+                          <div *ngIf="Form.email.touched && Form.email.errors"    
+                          class="invalid-feedback">
+                              <div *ngIf="Form.email.errors.required">
+                                  Is required
+                              </div>
+                              <div *ngIf="Form.email.errors.email">
+                                  invalid email
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="password"
+                          class="form-control"
+                          placeholder="Your Password"
+                          value=""
+                          formControlName="password"
+                          [ngClass]="{'is-invalid': Form.password.touched && Form.password.errors}"
+                          required 
+                          />
+                          <div *ngIf="Form.password.touched && Form.password.errors"    
+                          class="invalid-feedback">
+                              <div *ngIf="Form.password.errors.required">
+                                  Is required
+                              </div>
+                              <div *ngIf="Form.password.errors.maxlength">
+                                  Password must be less than 20 characters
+                              </div>
+                          </div>
+                      </div>
+                        <div class="form-group">
+                            <input type="file"
+                            name="file[]"
+                            (change)="getFileAdmin($event)" 
+                            class="form-control" 
+                            placeholder="Photos" 
+                            value="" 
+                            multiple/>
+                        </div>
+                        <input type="button" (click)="addAdmin()" class="btnRegister" data-dismiss="modal" value="Register"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--------->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

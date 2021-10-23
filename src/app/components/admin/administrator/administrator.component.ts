@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ValueProvider, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Administrator } from 'src/app/models/administrator';
 import { Patient } from 'src/app/models/Patient';
-import { Specialist } from 'src/app/models/specialist';
+import { Specialist } from 'src/app/models/Specialist';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class AdministratorComponent implements OnInit {
 
-  administrators:Patient[] = [];
+  administrators:Administrator[] = [];
   patients:Patient[] = [];
   specialists:Specialist[] = [];
   profileUrl:Observable<any>;
@@ -19,7 +20,7 @@ export class AdministratorComponent implements OnInit {
   constructor(private readonly userService: UsersService) { }
 
   ngOnInit(): void {
-    // this.getAdministrators();
+    this.getAdministrators();
     this.getSpecialists();
     this.getPatients();
     this.downloadFile();
@@ -28,7 +29,15 @@ export class AdministratorComponent implements OnInit {
   getAdministrators():void{
     this.userService.Administrators.subscribe(res => {
       res.forEach(r => {
-        this.administrators.push(r.data());
+        let administrator:Administrator = new Administrator(r.id,
+                                r.data().firstName,
+                                r.data().lastName,
+                                r.data().age,
+                                r.data().dni,
+                                r.data().email,
+                                r.data().password);
+
+        this.administrators.push(administrator);
       });
     });
   }
@@ -62,7 +71,8 @@ export class AdministratorComponent implements OnInit {
                                 r.data().dni,
                                 r.data().email,
                                 r.data().password,
-                                r.data().speciality);
+                                r.data().speciality,
+                                r.data().access);
 
         this.specialists.push(specialist);
       });
@@ -78,13 +88,13 @@ export class AdministratorComponent implements OnInit {
     });
   }
 
-  isChecked():void{
-    const el = this.checkbox.nativeElement.checked;
-    console.log(el); 
+  isChecked(id:string):void{
+    const isChecked = this.checkbox.nativeElement.checked;
+    this.UpdateSpecialist(id,isChecked);
   }
 
-  UpdateSpecialist():void{
-    
+  UpdateSpecialist(id:string,check:boolean):void{
+    this.userService.UpdateSpecialist(id,check);
   }
 
 }

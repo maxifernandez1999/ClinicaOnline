@@ -44,6 +44,10 @@ export class UsersService {
     return this.firestore.collection('specialists').add(data);
   }
 
+  addAdministrator(data:any):Promise<any>{
+    return this.firestore.collection('administrators').add(data);
+  }
+
   
   uploadFile(file:File, folder:any, email:any, dni:any):void{
     // const id = Math.random().toString(36).substring(2);
@@ -57,9 +61,9 @@ export class UsersService {
     return ref.getDownloadURL();
   }
 
-  // UpdateSpecialist():void{
-  //   firestore.collection("users").doc(doc.id).update({foo: "bar"});
-  // }
+  UpdateSpecialist(id:string,isAccess:boolean):any{
+    return this.firestore.collection("specialists").doc(id).update({access: isAccess});
+  }
 
 
 }

@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChild('linkSpecialists') linkSpecialists:ElementRef;
   @ViewChild('formSpecialists') formSpecialists:ElementRef;
   @ViewChild('formPatients') formPatients:ElementRef;
+  @ViewChild('modal') modalRegister:ElementRef;
   form : FormGroup;
   filesPatient:any[] = [];
   filesSpecialist:any[] = [];
@@ -205,7 +206,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   getFilePatient(e:any):any{
-    console.log(e);;
+    console.log(e);
     for (const file of e.target.files) {
       this.filesPatient.push(file);
     }
@@ -229,6 +230,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
+  showModal():void{
+    const el = this.modalRegister.nativeElement;
+    this.renderer.addClass(el,'show');
+  }
   addPatient(){
     this.userService.addPatient({
       firstName: this.firstNamePatientControl,
@@ -244,6 +249,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       console.log(err);    
     });
     this.UploadFile('patients',this.filesPatient);
+    this.showModal();
   }
 
   addSpecialist(){
@@ -254,7 +260,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       dni: this.dniSpecialistControl,
       email: this.emailSpecialistControl,
       password: this.passwordSpecialistControl,
-      speciality: this.specialityControl
+      speciality: this.specialityControl,
+      access: false
     }).then(res => {
       console.log(res);
     }).catch(err => {
@@ -262,6 +269,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     })
     this.UploadFile('specialists',this.filesSpecialist);
     console.log(this.specialityControl);
+    this.showModal();
   }
 
   changeFormPatients():void{

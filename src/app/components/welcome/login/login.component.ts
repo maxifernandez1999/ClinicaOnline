@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Administrator } from 'src/app/models/administrator';
 import { Patient } from 'src/app/models/Patient';
+import { Specialist } from 'src/app/models/Specialist';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -10,10 +12,9 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class LoginComponent implements OnInit {
 
-  data:Patient; 
-  administrators:any[] = [];
-  specialists:any[] = [];
-  patients:any[] = [];
+  administrators:Administrator[] = [];
+  specialists:Specialist[] = [];
+  patients:Patient[] = [];
 
   @ViewChild('email') email:ElementRef;
   @ViewChild('password') password:ElementRef;
@@ -40,46 +41,98 @@ export class LoginComponent implements OnInit {
 
   getPatients():void{
     this.userService.Patients.subscribe(res => {
-      this.patients = res;
+      res.forEach(r => {
+        let patient:Patient = new Patient(r.id,
+                                r.data().firstName,
+                                r.data().lastName,
+                                r.data().age,
+                                r.data().dni,
+                                r.data().email,
+                                r.data().password,
+                                r.data().socialWork);
+
+        this.patients.push(patient);
+      });
+
     });
+    console.log(this.patients)
   }
 
   getSpecialists():void{
     this.userService.Specialists.subscribe(res => {
-      this.specialists = res;
+      res.forEach(r => {
+        let specialist:Specialist = new Specialist(r.id,
+                                r.data().firstName,
+                                r.data().lastName,
+                                r.data().age,
+                                r.data().dni,
+                                r.data().email,
+                                r.data().password,
+                                r.data().speciality,
+                                r.data().access);
+
+        this.specialists.push(specialist);
+      });
     });
   }
 
   getAdministrators():void{
     this.userService.Administrators.subscribe(res => {
-      this.administrators = res;
+      res.forEach(r => {
+        let administrator:Administrator = new Administrator(r.id,
+                                r.data().firstName,
+                                r.data().lastName,
+                                r.data().age,
+                                r.data().dni,
+                                r.data().email,
+                                r.data().password);
+
+        this.administrators.push(administrator);
+      });
     });
   }
 
-  isRegister():boolean{
+  isRegister():string{
     for (const pat of this.patients) {
-      if (pat.email === this.Email && pat.password === this.Password) {
-        return true;
+      if (this.userValid(pat)) {
+        return "register";
       }
     }
-    for (const pat of this.specialists) {
-      if (pat.email === this.Email && pat.password === this.Password) {
-        return true;
+    for (const spe of this.specialists) {
+      if (this.userValid(spe)) {
+        if (this.accessValid(spe)) {
+          return "access";
+        }else{
+          return "no-access"
+        }
       }
     }
-    for (const pat of this.administrators) {
-      if (pat.email === this.Email && pat.password === this.Password) {
-        return true;
+    for (const adm of this.administrators) {
+      if (this.userValid(adm)) {
+        return "register";
       }
+    }
+    return "error";
+  }
+
+  userValid(user:any):boolean{
+    if (user.email === this.Email && user.password === this.Password) {
+      return true;
     }
     return false;
   }
 
-  Login():void{
-    if (this.isRegister()) {
+  accessValid(spe:Specialist):boolean{
+    return spe.access;
+  }
+
+  login():void{
+    if (this.isRegister() === "register") {
       this.router.navigate(['admin']);
+    }else if(this.isRegister() === "no-access"){
+      alert('The specialist does not have access');
     }else{
-      alert('no registrado');
+      alert('no registed');
     }
   }
 

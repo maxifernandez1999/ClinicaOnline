@@ -30,12 +30,13 @@
       </div>
 </div>
 <!--****-->
+
 <div class="container table-center">
       <div class="container table-right">
             <table class="table table-hover">
-                  <thead>
+                  <thead >                      
                         <h2 class="text-center">Specialists</h2>
-                        <tr>
+                        <tr>   
                               <th scope="col">First Name</th>
                               <th scope="col">Last Name</th>
                               <th scope="col">Age</th>
@@ -55,9 +56,14 @@
                               <td>{{specialist.dni}}</td>
                               <td>{{specialist.email}}</td>
                               <td>{{specialist.password}}</td>
-                              <!-- <td>{{specialist.speciality}}</td> -->
+                              <td>{{specialist.speciality}}</td>
                               <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td> 
-                              <td><div  class="checkbox mb-3" (change)="isChecked()"><input #check type="checkbox" name="" id=""></div></td>      
+                              <td>
+                                    <div class="checkbox mb-3" >
+                                          <input *ngIf="specialist.access" #check (change)="isChecked(specialist.id)" type="checkbox" name="" id="" checked>
+                                          <input *ngIf="specialist.access == false" #check (change)="isChecked(specialist.id)" type="checkbox" name="" id="">
+                                    </div>
+                              </td>      
                         </tr>
                   </tbody>
             </table>
@@ -69,31 +75,28 @@
             <table class="table table-hover">
                   <thead>
                         <h2 class="text-center">Administrators</h2>
-                        <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">First</th>
-                              <th scope="col">Last</th>
-                              <th scope="col">Handle</th>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                              Add Administrator
+                            </button>
+                            <tr>   
+                              <th scope="col">First Name</th>
+                              <th scope="col">Last Name</th>
+                              <th scope="col">Age</th>
+                              <th scope="col">Dni</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Password</th>
+                              <th scope="col">Photo</th>
                         </tr>
                   </thead>
-                  <tbody>
+                  <tbody *ngFor="let admin of administrators">
                         <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                        </tr>
-                        <tr>
-                              <th scope="row">2</th>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                        </tr>
-                        <tr>
-                              <th scope="row">3</th>
-                              <td>Larry the Bird</td>
-                              <td>@twitter</td>
-                              <td>@twitter</td>
+                              <td>{{admin.firstName}}</td>
+                              <td>{{admin.lastName}}</td>
+                              <td>{{admin.age}}</td>
+                              <td>{{admin.dni}}</td>
+                              <td>{{admin.email}}</td>
+                              <td>{{admin.password}}</td>
+                              <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td>     
                         </tr>
                   </tbody>
             </table>
