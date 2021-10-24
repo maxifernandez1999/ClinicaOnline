@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Administrator } from 'src/app/models/administrator';
+import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
+import { ShiftsService } from 'src/app/services/shifts.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -16,10 +17,16 @@ export class LoginComponent implements OnInit {
   specialists:Specialist[] = [];
   patients:Patient[] = [];
 
+  isPatient:boolean = false;
+  isSpecialist:boolean = false;
+  isAdministrator:boolean = false;
+
+
   @ViewChild('email') email:ElementRef;
   @ViewChild('password') password:ElementRef;
   constructor(private userService: UsersService,
-              private router:Router) { }
+              private router:Router,
+              private shiftsService: ShiftsService) { }
 
   ngOnInit(): void {
     this.getAdministrators();
@@ -37,6 +44,10 @@ export class LoginComponent implements OnInit {
 
   access():void{
     this.router.navigate(['admin']);
+  }
+
+  sendDataLogin(data:string){
+    this.shiftsService.dataLogin(data);
   }
 
   getPatients():void{
@@ -95,13 +106,16 @@ export class LoginComponent implements OnInit {
   isRegister():string{
     for (const pat of this.patients) {
       if (this.userValid(pat)) {
+        this.isPatient = true;
         return "register";
       }
     }
     for (const spe of this.specialists) {
       if (this.userValid(spe)) {
         if (this.accessValid(spe)) {
+          this.isSpecialist = true;
           return "access";
+          
         }else{
           return "no-access"
         }
@@ -109,6 +123,7 @@ export class LoginComponent implements OnInit {
     }
     for (const adm of this.administrators) {
       if (this.userValid(adm)) {
+        this.isAdministrator = true;
         return "register";
       }
     }
@@ -128,7 +143,14 @@ export class LoginComponent implements OnInit {
 
   login():void{
     if (this.isRegister() === "register") {
-      this.router.navigate(['admin']);
+      if (this.isPatient) {
+        this.sendDataLogin("patient");
+      }else if(this.isSpecialist){
+        this.sendDataLogin("specialist");
+      }else{
+        this.sendDataLogin("administrator");
+      }
+      this.router.navigate(['shiftsLoad']);
     }else if(this.isRegister() === "no-access"){
       alert('The specialist does not have access');
     }else{

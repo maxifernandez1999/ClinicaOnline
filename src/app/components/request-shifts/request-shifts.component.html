@@ -1,6 +1,10 @@
 <div class="container table-center mt-3">
       <div class="container table-right ">
+          <h2>Shifts</h2>
             <div class="form-group">
+                <div  class="form-group">
+                    <input *ngIf="isAdmin" type="text" class="form-control" placeholder="Patient Name">
+                </div>
                   <select formControlName="speciality"      class="form-control">
                       <option selected>Ophthalmologist</option>
                       <option>Cardiologyr</option>
@@ -14,5 +18,18 @@
                       <option>Wanda Nara</option>
                   </select>
               </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="day">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Month">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Hour">
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" value="Submit">
+            </div>
+            
       </div>
 </div>

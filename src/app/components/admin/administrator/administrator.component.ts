@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ValueProvider, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Administrator } from 'src/app/models/administrator';
+import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
 import { UsersService } from 'src/app/services/users.service';
