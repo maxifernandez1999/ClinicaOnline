@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit {
   }
 
   access():void{
-    this.router.navigate(['admin']);
+    this.email.nativeElement.value = "lionelmessi@gmail.com";
+    this.password.nativeElement.value = "liomessi";
+
   }
 
   sendDataLogin(data:string){

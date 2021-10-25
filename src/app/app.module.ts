@@ -12,11 +12,14 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AdminModule } from './components/admin/admin.module';
 import { RequestShiftsComponent } from './components/request-shifts/request-shifts.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ShiftsComponent } from './components/shifts/shifts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RequestShiftsComponent
+    RequestShiftsComponent,
+    ShiftsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { RequestShiftsComponent } from './components/request-shifts/request-shif
     provideDatabase(() => getDatabase()),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

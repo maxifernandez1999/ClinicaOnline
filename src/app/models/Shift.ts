@@ -1,0 +1,22 @@
+export class Shift {
+      public id:string;
+      public patientName?:string;
+      public specialist:any;
+      public speciality:string;
+      public date:string;
+      public time:string;
+
+      constructor(id:string,
+                  patientName:string,
+                  specialist:string,
+                  speciality:string,
+                  date:string,
+                  time:string) {
+            this.patientName = patientName;
+            this.specialist = specialist;
+            this.speciality = speciality;
+            this.date = date;
+            this.time = time;
+            this.id = id;
+      }
+}
