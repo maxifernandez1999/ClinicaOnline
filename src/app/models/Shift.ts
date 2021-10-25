@@ -4,14 +4,14 @@ export class Shift {
       public specialist:any;
       public speciality:string;
       public date:string;
-      public time:string;
+      public time:number;
 
       constructor(id:string,
                   patientName:string,
                   specialist:string,
                   speciality:string,
                   date:string,
-                  time:string) {
+                  time:number) {
             this.patientName = patientName;
             this.specialist = specialist;
             this.speciality = speciality;

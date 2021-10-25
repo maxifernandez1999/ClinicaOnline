@@ -22,6 +22,9 @@ export class ShiftsService {
     this.communicatorLogin.next(data);
   }
 
+  cancelShift(id:string):Promise<any>{
+    return this.firestore.collection("shifts").doc(id).delete();
+  }
   addShift(data:any):Promise<any>{
     return this.firestore.collection('shifts').add(data);
   }
