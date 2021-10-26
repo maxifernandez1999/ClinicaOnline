@@ -14,12 +14,14 @@ import { AdminModule } from './components/admin/admin.module';
 import { RequestShiftsComponent } from './components/request-shifts/request-shifts.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShiftsComponent } from './components/shifts/shifts.component';
+import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RequestShiftsComponent,
-    ShiftsComponent
+    ShiftsComponent,
+    MyShiftsComponent
   ],
   imports: [
     BrowserModule,

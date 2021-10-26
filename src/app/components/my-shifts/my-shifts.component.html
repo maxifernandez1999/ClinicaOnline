@@ -1,0 +1,42 @@
+
+<div class="container table-center">
+      <div class="form-group">
+            <input (click)="resetFilters()" type="button" class="btn btn-warning m-3" value="Reset Filters">
+            <div class="form-control">
+                  <h3>Filter Specility</h3>
+                  <input *ngFor="let spt of specialities" (click)="filterSpeciality(spt)" type="button" class="btn btn-warning m-3" value="{{spt}}">
+            </div>
+            <div class="form-control">
+                  <h3>Filter Specialist</h3>
+                  <input *ngFor="let sp of specialists" (click)="filterSpecialist(sp)" type="button" class="btn btn-info m-3" value="{{sp}}">
+            </div>
+      </div>
+     
+      
+      <div class="container table-right">
+            <table #body  class="table table-hover">
+                  <thead>
+                        <h2 class="text-center">Shifts</h2>
+                        <tr>
+                              <th scope="col">Patient Name</th>
+                              <th scope="col">Speciality</th>
+                              <th scope="col">Specialist</th>
+                              <th scope="col">Date</th>
+                              <th scope="col">Time</th>
+                              <th scope="col">Actions</th>
+                        </tr>
+                  </thead>
+                  <tbody *ngFor="let shift of shifts">
+                        <tr>
+                              <td>{{shift.patientName}}</td>
+                              <td>{{shift.speciality}}</td>
+                              <td>{{shift.specialist}}</td>
+                              <td>{{shift.date}}</td>
+                              <td>{{shift.time}}</td>
+                              <td><input type="button" class="btn btn-danger" value="Cancel" (click)="cancelShift(shift.id)"></td>
+                        </tr>
+                  </tbody>
+            </table>
+      </div>
+</div>
+<!--****-->

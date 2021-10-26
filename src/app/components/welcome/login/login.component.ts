@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { Router } from '@angular/router';
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
+import { Shift } from 'src/app/models/Shift';
 import { Specialist } from 'src/app/models/Specialist';
 import { ShiftsService } from 'src/app/services/shifts.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   administrators:Administrator[] = [];
   specialists:Specialist[] = [];
   patients:Patient[] = [];
-
+  currentUser:any;
   isPatient:boolean = false;
   isSpecialist:boolean = false;
   isAdministrator:boolean = false;
@@ -109,13 +110,16 @@ export class LoginComponent implements OnInit {
     for (const pat of this.patients) {
       if (this.userValid(pat)) {
         this.isPatient = true;
+        this.currentUser = pat;
         return "register";
+        
       }
     }
     for (const spe of this.specialists) {
       if (this.userValid(spe)) {
         if (this.accessValid(spe)) {
           this.isSpecialist = true;
+          this.currentUser = spe;
           return "access";
           
         }else{
@@ -126,6 +130,7 @@ export class LoginComponent implements OnInit {
     for (const adm of this.administrators) {
       if (this.userValid(adm)) {
         this.isAdministrator = true;
+        this.currentUser = adm;
         return "register";
       }
     }
@@ -143,16 +148,21 @@ export class LoginComponent implements OnInit {
     return spe.access;
   }
 
+  sendDataLoginPatient(data:Patient):void{
+    this.userService.dataLoginPatient(data);
+  }
+
   login():void{
     if (this.isRegister() === "register") {
       if (this.isPatient) {
         this.sendDataLogin("patient");
+        this.sendDataLoginPatient(this.currentUser);
       }else if(this.isSpecialist){
         this.sendDataLogin("specialist");
       }else{
         this.sendDataLogin("administrator");
       }
-      this.router.navigate(['shiftsLoad']);
+      this.router.navigate(['myShifts']);
     }else if(this.isRegister() === "no-access"){
       alert('The specialist does not have access');
     }else{

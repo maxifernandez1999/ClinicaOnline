@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Patient } from '../models/Patient';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class UsersService {
   public specialists: Observable<any>;
   public administrators: Observable<any>;
 
-
+  private communicatorLoginPatient = new BehaviorSubject<any>('');
+  public communicatorLoginPatient$ = this.communicatorLoginPatient.asObservable();
   constructor(private readonly firestore: AngularFirestore,
               private readonly storage:AngularFireStorage) { 
     // this.patients = firestore.collection('patients').valueChanges();
@@ -63,6 +65,10 @@ export class UsersService {
 
   UpdateSpecialist(id:string,isAccess:boolean):any{
     return this.firestore.collection("specialists").doc(id).update({access: isAccess});
+  }
+
+  public dataLoginPatient(data:Patient){
+    this.communicatorLoginPatient.next(data);
   }
 
 
