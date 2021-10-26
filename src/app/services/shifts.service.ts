@@ -25,6 +25,13 @@ export class ShiftsService {
   public dataLogin(data:string){
     this.communicatorLogin.next(data);
   }
+  // .snapshotChanges() returns a DocumentChangeAction[], which contains
+  // a lot of information about "what happened" with each change. If you want to
+  // get the data and the id use the map operator.
+  
+  get ShiftCollection():any{
+    return this.firestore.collection<Shift>('shifts');
+  }
 
 
  

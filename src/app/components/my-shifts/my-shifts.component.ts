@@ -16,43 +16,64 @@ export class MyShiftsComponent implements OnInit {
               private shiftService: ShiftsService) { }
   
   patient:Patient;
-
+  ID:string;
   shifts: Shift[] = [];
   subscription:Subscription;
   specialists: string[] = [];
   specialities: string[] = [];
 
   ngOnInit(): void {
-    this.getInfoLoginPatient();
     this.getShifts();
-  }
-  getInfoLoginPatient():void{
-    this.subscription = this.userService.communicatorLoginPatient$.subscribe(res => {
-      this.patient = res;
-    });
-    console.log(this.patient.firstName);
+    setTimeout(() => {
+      this.getSpecialists();
+      this.getSpeciality();
+    },2000);
   }
 
+  getLocalStorageData():string{
+    return localStorage.getItem("patient");
+  }
 
-  ////////////////////////
+  seeReview(id:string):void{
+
+  }
+  survey(id:string):void{
+
+  }
+  rateAttention(id:string):void{
+
+  }
+  sendID(id:string){
+    this.ID = id;
+  }
+  getReview():void{
+
+  }
   getShifts(): void {
-    this.shiftService.Shifts.subscribe(res => {
-      res.forEach(r => {
-        console.log(r.data().patientName)
-        if (r.data().patientName == this.patient.firstName) {
-              console.log(r.data().patientName)
-              let shift: Shift = new Shift( r.id,
-                                            r.data().patientName,
-                                            r.data().specialist,
-                                            r.data().speciality,
-                                            r.data().date,
-                                            r.data().time);
-              this.shifts.push(shift);     
-        }
-        
-      });
-    });
-    console.log(this.shifts)
+      this.getLocalStorageData();
+      this.shiftService.Shifts.subscribe(res => {
+        res.forEach(r => {
+          let shift: Shift = new Shift( r.id,
+                                        r.data().patientName,
+                                        r.data().specialist,
+                                        r.data().speciality,
+                                        r.data().date,
+                                        r.data().time);
+          this.shifts.push(shift);     
+        });
+        this.filterShifts();
+      })
+      
+  }
+  filterShifts(){
+    let obj = JSON.parse(this.getLocalStorageData());
+    console.log(obj);
+    this.shifts = this.shifts.map<Shift>(shift => {
+      if (shift.patientName == obj.firstName) {
+        return shift;
+      }
+      return null;
+    })
   }
 
   resetFilters() {

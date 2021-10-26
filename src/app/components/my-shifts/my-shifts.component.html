@@ -23,20 +23,52 @@
                               <th scope="col">Specialist</th>
                               <th scope="col">Date</th>
                               <th scope="col">Time</th>
-                              <th scope="col">Actions</th>
+                              <th scope="col">Cancel</th>
+                              <th scope="col">Review</th>
+                              <th scope="col">Survey</th>
+                              <th scope="col">rate Attention</th>
                         </tr>
                   </thead>
                   <tbody *ngFor="let shift of shifts">
-                        <tr>
+                        <tr *ngIf="shift !== null">
                               <td>{{shift.patientName}}</td>
                               <td>{{shift.speciality}}</td>
                               <td>{{shift.specialist}}</td>
                               <td>{{shift.date}}</td>
                               <td>{{shift.time}}</td>
-                              <td><input type="button" class="btn btn-danger" value="Cancel" (click)="cancelShift(shift.id)"></td>
+                              <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" (click)="cancelShift(shift.id)">
+                                    Cancel
+                                  </button></td>
+                              <td><input type="button" class="btn btn-info" value="See Review" (click)="seeReview(shift.id)"></td>
+                              <td><input type="button" class="btn btn-info" value="complete Survey" (click)="survey(shift.id)"></td>
+                              <td><input type="button" class="btn btn-info" value="Rate Attention" (click)="rateAttention(shift.id)"></td>
                         </tr>
                   </tbody>
             </table>
       </div>
 </div>
+<!--********-->
+
 <!--****-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Why do you want to cancel the shift?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <textarea name="" id="" cols="30" rows="10">
+                  
+            </textarea>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="getReview()">OK</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

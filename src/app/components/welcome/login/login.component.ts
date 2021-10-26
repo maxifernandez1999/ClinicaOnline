@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { Router } from '@angular/router';
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
-import { Shift } from 'src/app/models/Shift';
 import { Specialist } from 'src/app/models/Specialist';
 import { ShiftsService } from 'src/app/services/shifts.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -156,7 +155,7 @@ export class LoginComponent implements OnInit {
     if (this.isRegister() === "register") {
       if (this.isPatient) {
         this.sendDataLogin("patient");
-        this.sendDataLoginPatient(this.currentUser);
+        localStorage.setItem("patient", JSON.stringify(this.currentUser));
       }else if(this.isSpecialist){
         this.sendDataLogin("specialist");
       }else{
