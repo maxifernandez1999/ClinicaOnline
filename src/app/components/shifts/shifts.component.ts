@@ -1,4 +1,7 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Shift } from 'src/app/models/Shift';
 import { ShiftsService } from 'src/app/services/shifts.service';
 
@@ -7,26 +10,35 @@ import { ShiftsService } from 'src/app/services/shifts.service';
   templateUrl: './shifts.component.html',
   styleUrls: ['./shifts.component.scss']
 })
-export class ShiftsComponent implements OnInit {
+export class ShiftsComponent implements OnInit, OnDestroy {
 
   constructor(private shiftsService:ShiftsService,
-              private renderer:Renderer2) { }
+              private renderer:Renderer2,
+              private router:Router) { }
 
   @ViewChild("body") body:ElementRef;
   shifts:Shift[] = [];
   specialists:string[] = [];
   specialities:string[] = [];
-
+  subscription:Subscription;
   ngOnInit(): void {
-    this.getShifts();
+    if (this.localStorageData()) {
+      this.getShifts();
     setTimeout(() => {
       this.getSpecialists();
       this.getSpeciality();
     },1500);
+    }else{
+      this.router.navigate(['']);
+    }
+    
   }
 
+  localStorageData():boolean{
+    return localStorage.hasOwnProperty("administrator");
+  }
   getShifts():void{
-    this.shiftsService.Shifts.subscribe(res => {
+    this.subscription = this.shiftsService.Shifts.subscribe(res => {
       res.forEach(r => {
         
         let shift:Shift = new Shift(r.id,
@@ -34,13 +46,18 @@ export class ShiftsComponent implements OnInit {
                                     r.data().specialist,
                                     r.data().speciality,
                                     r.data().date,
-                                    r.data().time);
+                                    r.data().time,
+                                    r.data().state,
+                                    r.data().commentary);
         console.log(shift);
         this.shifts.push(shift);
       });
     });
   }
 
+  ngOnDestroy():void{
+    this.subscription.unsubscribe();
+  }
   resetFilters(){
     window.location.reload();
   }

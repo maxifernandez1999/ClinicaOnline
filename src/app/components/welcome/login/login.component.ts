@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   administrators:Administrator[] = [];
   specialists:Specialist[] = [];
   patients:Patient[] = [];
-  currentUser:any;
+  currentUser:any = "";
   isPatient:boolean = false;
   isSpecialist:boolean = false;
   isAdministrator:boolean = false;
@@ -43,8 +44,8 @@ export class LoginComponent implements OnInit {
   }
 
   access():void{
-    this.email.nativeElement.value = "lionelmessi@gmail.com";
-    this.password.nativeElement.value = "liomessi";
+    this.email.nativeElement.value = "maradona@gmail.com";
+    this.password.nativeElement.value = "marado";
 
   }
 
@@ -56,13 +57,13 @@ export class LoginComponent implements OnInit {
     this.userService.Patients.subscribe(res => {
       res.forEach(r => {
         let patient:Patient = new Patient(r.id,
-                                r.data().firstName,
-                                r.data().lastName,
-                                r.data().age,
-                                r.data().dni,
-                                r.data().email,
-                                r.data().password,
-                                r.data().socialWork);
+                                          r.data().firstName,
+                                          r.data().lastName,
+                                          r.data().age,
+                                          r.data().dni,
+                                          r.data().email,
+                                          r.data().password,
+                                          r.data().socialWork);
 
         this.patients.push(patient);
       });
@@ -74,15 +75,15 @@ export class LoginComponent implements OnInit {
   getSpecialists():void{
     this.userService.Specialists.subscribe(res => {
       res.forEach(r => {
-        let specialist:Specialist = new Specialist(r.id,
-                                r.data().firstName,
-                                r.data().lastName,
-                                r.data().age,
-                                r.data().dni,
-                                r.data().email,
-                                r.data().password,
-                                r.data().speciality,
-                                r.data().access);
+        let specialist:Specialist = new Specialist( r.id,
+                                                    r.data().firstName,
+                                                    r.data().lastName,
+                                                    r.data().age,
+                                                    r.data().dni,
+                                                    r.data().email,
+                                                    r.data().password,
+                                                    r.data().speciality,
+                                                    r.data().access);
 
         this.specialists.push(specialist);
       });
@@ -93,12 +94,12 @@ export class LoginComponent implements OnInit {
     this.userService.Administrators.subscribe(res => {
       res.forEach(r => {
         let administrator:Administrator = new Administrator(r.id,
-                                r.data().firstName,
-                                r.data().lastName,
-                                r.data().age,
-                                r.data().dni,
-                                r.data().email,
-                                r.data().password);
+                                                            r.data().firstName,
+                                                            r.data().lastName,
+                                                            r.data().age,
+                                                            r.data().dni,
+                                                            r.data().email,
+                                                            r.data().password);
 
         this.administrators.push(administrator);
       });
@@ -110,11 +111,14 @@ export class LoginComponent implements OnInit {
       if (this.userValid(pat)) {
         this.isPatient = true;
         this.currentUser = pat;
+        console.log(typeof pat)
         return "register";
         
       }
     }
+    console.log(this.specialists)
     for (const spe of this.specialists) {
+      
       if (this.userValid(spe)) {
         if (this.accessValid(spe)) {
           this.isSpecialist = true;
@@ -122,9 +126,10 @@ export class LoginComponent implements OnInit {
           return "access";
           
         }else{
-          return "no-access"
+          return "no-access";
         }
       }
+      
     }
     for (const adm of this.administrators) {
       if (this.userValid(adm)) {
@@ -152,16 +157,22 @@ export class LoginComponent implements OnInit {
   }
 
   login():void{
-    if (this.isRegister() === "register") {
+    console.log(this.isRegister())
+    if (this.isRegister() === "access" || this.isRegister() === "register") {
       if (this.isPatient) {
         this.sendDataLogin("patient");
         localStorage.setItem("patient", JSON.stringify(this.currentUser));
+        this.router.navigate(['myShifts']);
       }else if(this.isSpecialist){
         this.sendDataLogin("specialist");
-      }else{
+        localStorage.setItem("specialist", JSON.stringify(this.currentUser));
+        this.router.navigate(['myShifts']);
+      }else if(this.isAdministrator){
         this.sendDataLogin("administrator");
+        localStorage.setItem("administrator", JSON.stringify(this.currentUser));
+        this.router.navigate(['shifts']);
       }
-      this.router.navigate(['myShifts']);
+      
     }else if(this.isRegister() === "no-access"){
       alert('The specialist does not have access');
     }else{

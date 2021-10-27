@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {  Subscription } from 'rxjs';
+import { Patient } from 'src/app/models/Patient';
+import { Shift } from 'src/app/models/Shift';
+import { Specialist } from 'src/app/models/Specialist';
 import { ShiftsService } from 'src/app/services/shifts.service';
 
 @Component({
@@ -15,13 +19,13 @@ export class RequestShiftsComponent implements OnInit {
   isPatient:boolean = false;
   isAdmin:boolean = false;
   constructor(private readonly shiftsService: ShiftsService,
-              private fb:FormBuilder) { }
+              private fb:FormBuilder,
+              private router:Router) { }
 
 
   ngOnInit(): void {
     this.initForm();
-    this.getInfoLogin();
-    console.log(this.isAdmin);
+    this.localStorageData();
   }
 
   get patientNameControl():AbstractControl{
@@ -47,16 +51,29 @@ export class RequestShiftsComponent implements OnInit {
     return this.formShifts.controls;
   }
 
-  getInfoLogin():void{
-    this.subscription = this.shiftsService.communicatorLogin$.subscribe(res => {
-      if(res === "patient"){
-        this.isPatient = true;
-      }else if(res === "administrator"){
-        this.isAdmin = true;
-      }else{
-        console.log("specialist")
-      }
-    });
+  // getInfoLogin():void{
+  //   this.subscription = this.shiftsService.communicatorLogin$.subscribe(res => {
+  //     if(res === "patient"){
+  //       this.isPatient = true;
+  //     }else if(res === "administrator"){
+  //       this.isAdmin = true;
+  //     }else{
+  //       console.log("specialist")
+  //     }
+  //   });
+  // }
+
+  localStorageData():void{
+    if(localStorage.hasOwnProperty("administrator")){
+      this.isAdmin = true;
+    }else if(localStorage.hasOwnProperty("patient")){
+      this.isAdmin = true;
+    }else{
+      this.router.navigate(['/'])
+    }
+  }
+  getDataLocalStorage(user:string):Patient | Specialist{
+    return JSON.parse(localStorage.getItem(user));
   }
 
   initForm():void{
@@ -121,7 +138,7 @@ export class RequestShiftsComponent implements OnInit {
       });
     }else if(this.isPatient){
       this.shiftsService.addShift({
-        patientName: "",
+        patientName: this.getDataLocalStorage("patient").firstName,
         specialist: this.specialistControl,
         speciality: this.specialityControl,
         date: this.dayControl +'/'+ this.monthControl,
