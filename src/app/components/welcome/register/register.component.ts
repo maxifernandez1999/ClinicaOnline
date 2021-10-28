@@ -128,8 +128,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         ]
       ]
 
-      // region: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(3),Validators.pattern('^[0-9]*$')]],
-      // phone: ['',[Validators.required,Validators.maxLength(7),Validators.pattern('^[0-9]*$')]]
     });
   }
 
