@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ValueProvider, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
@@ -17,7 +18,8 @@ export class AdministratorComponent implements OnInit {
   specialists:Specialist[] = [];
   profileUrl:Observable<any>;
   @ViewChild('check') checkbox:ElementRef;
-  constructor(private readonly userService: UsersService) { }
+  constructor(private readonly userService: UsersService,
+              private router:Router) { }
 
   ngOnInit(): void {
     this.getAdministrators();
@@ -72,7 +74,8 @@ export class AdministratorComponent implements OnInit {
                                 r.data().email,
                                 r.data().password,
                                 r.data().speciality,
-                                r.data().access);
+                                r.data().access,
+                                r.data().disponibility);
 
         this.specialists.push(specialist);
       });
@@ -81,6 +84,15 @@ export class AdministratorComponent implements OnInit {
     
   }
 
+  goShifts():void{
+    this.router.navigate(['shifts'])
+  }
+  goRequestShifts():void{
+    this.router.navigate(['shiftsLoad'])
+  }
+  profile():void{
+    this.router.navigate(['profile'])
+  }
   
 
   downloadFile():void{

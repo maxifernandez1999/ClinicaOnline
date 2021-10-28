@@ -8,6 +8,7 @@ export class Specialist {
       public password:string;
       public speciality:string;
       public access:boolean;
+      public disponibility:string;
 
       constructor(id:string,
                   firstName:string,
@@ -17,7 +18,8 @@ export class Specialist {
                   email:string,
                   password:string,
                   speciality:string,
-                  access:boolean) {
+                  access:boolean,
+                  disponibility:string) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.age = age;
@@ -27,6 +29,7 @@ export class Specialist {
             this.speciality = speciality;
             this.id = id;
             this.access = access;
+            this.disponibility = disponibility;
       }
       
 }

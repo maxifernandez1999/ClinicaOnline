@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Patient } from 'src/app/models/Patient';
 import { Shift } from 'src/app/models/Shift';
@@ -13,7 +14,8 @@ import { UsersService } from 'src/app/services/users.service';
 export class MyShiftsComponent implements OnInit {
 
   constructor(private userService: UsersService,
-              private shiftService: ShiftsService) { }
+              private shiftService: ShiftsService,
+              private router:Router) { }
   name:string;
   patient:Patient;
   ID:string;
@@ -48,7 +50,6 @@ export class MyShiftsComponent implements OnInit {
 
   getLocalStorageData():void{
     if (localStorage.hasOwnProperty("patient")) {
-      console.log("adasd");
       this.key = "patient";
       this.localStorageData = localStorage.getItem("patient");
       
@@ -59,6 +60,12 @@ export class MyShiftsComponent implements OnInit {
     
   }
 
+  goRequestShifts():void{
+    this.router.navigate(['shiftsLoad']);
+  }
+  profile():void{
+    this.router.navigate(['profile']);
+  }
 
   getUserName():void{
     let obj = JSON.parse(this.localStorageData);

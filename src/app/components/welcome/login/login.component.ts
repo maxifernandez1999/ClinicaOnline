@@ -83,7 +83,8 @@ export class LoginComponent implements OnInit {
                                                     r.data().email,
                                                     r.data().password,
                                                     r.data().speciality,
-                                                    r.data().access);
+                                                    r.data().access,
+                                                    r.data().disponibility);
 
         this.specialists.push(specialist);
       });
@@ -170,7 +171,7 @@ export class LoginComponent implements OnInit {
       }else if(this.isAdministrator){
         this.sendDataLogin("administrator");
         localStorage.setItem("administrator", JSON.stringify(this.currentUser));
-        this.router.navigate(['shifts']);
+        this.router.navigate(['admin']);
       }
       
     }else if(this.isRegister() === "no-access"){

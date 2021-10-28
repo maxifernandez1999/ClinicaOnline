@@ -59,17 +59,6 @@ export class RequestShiftsComponent implements OnInit {
     return this.formShifts.controls;
   }
 
-  // getInfoLogin():void{
-  //   this.subscription = this.shiftsService.communicatorLogin$.subscribe(res => {
-  //     if(res === "patient"){
-  //       this.isPatient = true;
-  //     }else if(res === "administrator"){
-  //       this.isAdmin = true;
-  //     }else{
-  //       console.log("specialist")
-  //     }
-  //   });
-  // }
 
   localStorageData():void{
     if(localStorage.hasOwnProperty("administrator")){
@@ -157,6 +146,7 @@ export class RequestShiftsComponent implements OnInit {
       }).catch(err => {
         console.log(err);    
       });
+      window.location.reload();
     }else if(this.isPatient){
       this.shiftsService.addShift({
         patientName: this.getDataLocalStorage("patient").firstName,
@@ -169,6 +159,7 @@ export class RequestShiftsComponent implements OnInit {
       }).catch(err => {
         console.log(err);    
       });
+      window.location.reload();
     }
     
   }

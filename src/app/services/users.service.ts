@@ -67,6 +67,10 @@ export class UsersService {
     return this.firestore.collection("specialists").doc(id).update({access: isAccess});
   }
 
+  UpdateSpecialistProfile(id:string,dispon:string):any{
+    return this.firestore.collection("specialists").doc(id).update({disponibility: dispon});
+  }
+
   public dataLoginPatient(data:Patient){
     this.communicatorLoginPatient.next(data);
   }

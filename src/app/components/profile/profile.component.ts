@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
@@ -16,10 +16,22 @@ export class ProfileComponent implements OnInit {
   key:string;
   localStorageData:any;
   patient:Patient;
+  specialist:Specialist;
+  administrator:Administrator;
+  @ViewChild('de') de:ElementRef;
+  @ViewChild('hasta') hasta:ElementRef;
+
   profileUrl:string;
   ngOnInit(): void {
     this.getLocalStorageData();
-    this.getPatient();
+    if (this.key === "patient") {
+      this.getPatient();
+    }else if(this.key === "specialist"){
+      this.getSpecialist();
+    }else if(this.key === "administrator"){
+      this.getAdministrator();
+    }
+    
   }
   getPatient():void{
     this.userService.Patients.subscribe(res => {
@@ -43,13 +55,16 @@ export class ProfileComponent implements OnInit {
   getAdministrator():void{
     this.userService.Administrators.subscribe(res => {
       res.forEach(r => {
-        let administrator:Administrator = new Administrator(r.id,
-                                r.data().firstName,
-                                r.data().lastName,
-                                r.data().age,
-                                r.data().dni,
-                                r.data().email,
-                                r.data().password);
+        if (this.isRegister(r.data().email,r.data().password)) {
+          this.administrator = new Administrator(r.id,
+            r.data().firstName,
+            r.data().lastName,
+            r.data().age,
+            r.data().dni,
+            r.data().email,
+            r.data().password);
+        }
+        
 
       });
     });
@@ -64,15 +79,19 @@ export class ProfileComponent implements OnInit {
   getSpecialist():void{
     this.userService.Specialists.subscribe(res => {
       res.forEach(r => {
-        let specialist:Specialist = new Specialist(r.id,
-                                r.data().firstName,
-                                r.data().lastName,
-                                r.data().age,
-                                r.data().dni,
-                                r.data().email,
-                                r.data().password,
-                                r.data().speciality,
-                                r.data().access);
+        if (this.isRegister(r.data().email,r.data().password)) {
+          this.specialist = new Specialist(r.id,
+            r.data().firstName,
+            r.data().lastName,
+            r.data().age,
+            r.data().dni,
+            r.data().email,
+            r.data().password,
+            r.data().speciality,
+            r.data().access,
+            r.data().disponibility);
+        }
+        
 
       });
     });
@@ -98,6 +117,12 @@ export class ProfileComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  UpdateSpecialist():void{
+    let de = this.de.nativeElement.value;
+    let hasta = this.hasta.nativeElement.value; 
+    this.userService.UpdateSpecialistProfile(this.specialist.id, de + '-' + hasta);
+    window.location.reload();
   }
 
 }

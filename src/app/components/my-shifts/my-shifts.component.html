@@ -1,4 +1,5 @@
-
+<input *ngIf="key === 'patient'" type="button" class="btn btn-success m-3" (click)="goRequestShifts()" value="Load Shifts">
+<input *ngIf="key === 'specialist' || key === 'patient'" type="button" class="btn btn-warning m-3" (click)="profile()" value="Profile">
 <div class="container-fluid table-center">
       <h2>Welcome {{name}}</h2>
       <div class="form-group">

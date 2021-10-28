@@ -1,9 +1,15 @@
 <div class="container table-center">
+      <div>
+            <input *ngIf="key === 'specialist'" #de class="form-control m-3" type="number" name="" id="" placeholder="De">
+            <input *ngIf="key === 'specialist'" #hasta class="form-control m-3" type="number" name="" id="" placeholder="Hasta">
+            <input *ngIf="key === 'specialist'" class="btn btn-warning m-3" (click)="UpdateSpecialist()" type="button" value="Change">
+      </div>
       <div class="container table-right">
+                  
             <table class="table table-hover">
                   <thead>
-                        <h2 class="text-center">Patients</h2>
-                        <tr>
+                        <h2 class="text-center">Profile</h2>
+                        <tr *ngIf="key === 'patient'">
                               <th scope="col">First Name</th>
                               <th scope="col">Last Name</th>
                               <th scope="col">Age</th>
@@ -13,9 +19,29 @@
                               <th scope="col">Social Work</th>
                               <th scope="col">Photo</th>
                         </tr>
+                        <tr *ngIf="key === 'specialist'">
+                              <th scope="col">First Name</th>
+                              <th scope="col">Last Name</th>
+                              <th scope="col">Age</th>
+                              <th scope="col">Dni</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Password</th>
+                              <th scope="col">Speciality</th>
+                              <th scope="col">disponibility</th>
+                              <th scope="col">Photo</th>
+                        </tr>
+                        <tr *ngIf="key === 'administrator'">
+                              <th scope="col">First Name</th>
+                              <th scope="col">Last Name</th>
+                              <th scope="col">Age</th>
+                              <th scope="col">Dni</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Password</th>
+                              <th scope="col">Photo</th>
+                        </tr>
                   </thead>
                   <tbody>
-                        <tr>
+                        <tr *ngIf="key === 'patient'">
                               <td>{{patient.firstName}}</td>
                               <td>{{patient.lastName}}</td>
                               <td>{{patient.age}}</td>
@@ -23,6 +49,26 @@
                               <td>{{patient.email}}</td>
                               <td>{{patient.password}}</td>
                               <td>{{patient.socialWork}}</td>   
+                              <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td> 
+                        </tr>
+                        <tr *ngIf="key === 'specialist'">
+                              <td>{{specialist.firstName}}</td>
+                              <td>{{specialist.lastName}}</td>
+                              <td>{{specialist.age}}</td>
+                              <td>{{specialist.dni}}</td>
+                              <td>{{specialist.email}}</td>
+                              <td>{{specialist.password}}</td>
+                              <td>{{specialist.speciality}}</td>
+                              <td>{{specialist.disponibility}}</td>
+                              <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td> 
+                        </tr>
+                        <tr *ngIf="key === 'administrator'">
+                              <td>{{administrator.firstName}}</td>
+                              <td>{{administrator.lastName}}</td>
+                              <td>{{administrator.age}}</td>
+                              <td>{{administrator.dni}}</td>
+                              <td>{{administrator.email}}</td>
+                              <td>{{administrator.password}}</td>
                               <td><img [src]="profileUrl" alt="Image" width="50px" height="50px"></td> 
                         </tr>
                   </tbody>
