@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -17,9 +18,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   form : FormGroup;
   filesPatient:any[] = [];
   filesSpecialist:any[] = [];
+  id:string;
   constructor(private renderer:Renderer2,
               private fb: FormBuilder,
-              private userService:UsersService ) {}
+              private userService:UsersService,
+              private router:Router ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -223,9 +226,31 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   UploadFile(folder:string,files:any):void{
     for (const file of files) {
-      this.userService.uploadFile(file,folder,this.emailPatientControl,this.dniPatientControl);
+      this.userService.uploadFile(file,folder,this.emailPatientControl,this.id);
       
     }
+  }
+  getIDPatient():void{
+    this.userService.Patients.subscribe(res => {
+      res.forEach(r => {
+        if (r.data().email === this.emailPatientControl && 
+            r.data().password === this.passwordPatientControl) {
+            this.id = r.id;
+        }
+      });
+    });
+
+  }
+  getIDSpecialist():void{
+    this.userService.Specialists.subscribe(res => {
+      res.forEach(r => {
+        if (r.data().email === this.emailSpecialistControl && 
+            r.data().password === this.passwordSpecialistControl) {
+            this.id = r.id;
+        }
+      });
+    });
+
   }
 
   showModal():void{
@@ -243,11 +268,25 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       socialWork: this.socialWorkPatientControl
     }).then(res => {
       console.log(res);
+      this.getIDPatient();
     }).catch(err => {
       console.log(err);    
     });
     this.UploadFile('patients',this.filesPatient);
-    this.showModal();
+    setTimeout(()=>{
+      this.showModal();
+    },1000);
+    let obj = {
+      firstName: this.firstNamePatientControl,
+      lastName: this.lastNamePatientControl,
+      age: this.agePatientControl,
+      dni: this.dniPatientControl,
+      email: this.emailPatientControl,
+      password: this.passwordPatientControl,
+      socialWork: this.socialWorkPatientControl
+    }
+    localStorage.setItem("patient", JSON.stringify(obj));
+    this.router.navigate(['myShifts']);
   }
 
   addSpecialist(){
@@ -262,12 +301,29 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       access: false
     }).then(res => {
       console.log(res);
+      this.getIDSpecialist();
     }).catch(err => {
       console.log(err);    
     })
-    this.UploadFile('specialists',this.filesSpecialist);
+    this.UploadFile('specialist',this.filesSpecialist);
     console.log(this.specialityControl);
-    this.showModal();
+    setTimeout(()=>{
+      this.showModal();
+    },1000);
+    let obj = {
+      firstName: this.firstNameSpecialistControl,
+      lastName: this.lastNameSpecialistControl,
+      age: this.ageSpecialistControl,
+      dni: this.dniSpecialistControl,
+      email: this.emailSpecialistControl,
+      password: this.passwordSpecialistControl,
+      speciality: this.specialityControl,
+      access: false
+    }
+    localStorage.setItem("specialist", JSON.stringify(obj));
+    this.router.navigate(['myShifts']);
+
+    
   }
 
   changeFormPatients():void{

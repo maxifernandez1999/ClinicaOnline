@@ -24,9 +24,6 @@ export class UsersService {
     this.administrators = firestore.collection('administrators').get();
   }
 
-  getID(){
-    return this.firestore.collection('patients').get();  
-  }
 
   get Patients():any{
     return this.patients;
@@ -51,9 +48,8 @@ export class UsersService {
   }
 
   
-  uploadFile(file:File, folder:any, email:any, dni:any):void{
-    // const id = Math.random().toString(36).substring(2);
-    const filePath = `${folder}/${email}_${dni}.png`;
+  uploadFile(file:File, folder:any, email:any, id:any):void{
+    const filePath = `${folder}/${email}_${id}.png`;
     const ref = this.storage.ref(filePath);
     const task = this.storage.upload(filePath,file);
   }
