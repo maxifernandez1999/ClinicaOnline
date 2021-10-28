@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { RequestShiftsComponent } from './components/request-shifts/request-shifts.component';
 import { ShiftsComponent } from './components/shifts/shifts.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'myShifts',
     component: MyShiftsComponent
+  },
+  {
+    path:'profile',
+    component: ProfileComponent
   }
 ];
 

@@ -15,13 +15,15 @@ import { RequestShiftsComponent } from './components/request-shifts/request-shif
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShiftsComponent } from './components/shifts/shifts.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RequestShiftsComponent,
     ShiftsComponent,
-    MyShiftsComponent
+    MyShiftsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

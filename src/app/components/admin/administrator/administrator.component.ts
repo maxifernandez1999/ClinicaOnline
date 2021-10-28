@@ -81,6 +81,8 @@ export class AdministratorComponent implements OnInit {
     
   }
 
+  
+
   downloadFile():void{
     this.userService.downloadFile().subscribe(res => {
       console.log(res);
