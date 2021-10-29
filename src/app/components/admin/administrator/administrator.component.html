@@ -26,7 +26,6 @@
                               <td>{{patient.email}}</td>
                               <td>{{patient.socialWork}}</td>   
                               <td><img src={{patient.photo}}  alt="Image" width="50px" height="50px"></td> 
-                              <td>patients/{{patient.photo}}</td>  
                         </tr>
                   </tbody>
             </table>
@@ -58,7 +57,7 @@
                               <td>{{specialist.dni}}</td>
                               <td>{{specialist.email}}</td>
                               <td>{{specialist.speciality}}</td>
-                              <td><img [src]="'patients/' + specialist.photo" alt="Image" width="50px" height="50px"></td> 
+                              <td><img src={{specialist.photo}} alt="Image" width="50px" height="50px"></td> 
                               <td>
                                     <div class="checkbox mb-3" >
                                           <input *ngIf="specialist.access" #check (change)="isChecked(specialist.id)" type="checkbox" name="" id="" checked>
@@ -95,7 +94,7 @@
                               <td>{{admin.age}}</td>
                               <td>{{admin.dni}}</td>
                               <td>{{admin.email}}</td>
-                              <td><img [src]="'patients/' + admin.photo" alt="Image" width="50px" height="50px"></td>     
+                              <td><img src={{admin.photo}} alt="Image" width="50px" height="50px"></td>     
                         </tr>
                   </tbody>
             </table>

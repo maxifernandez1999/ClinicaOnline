@@ -296,12 +296,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       }
       localStorage.setItem("patient", JSON.stringify(obj));
       this.router.navigate(['myShifts']);
-    },1500)
+    },2000)
     
   }
 
   addSpecialist(){
      this.UploadFile('specialist',this.filesSpecialist,this.emailSpecialistControl,this.firstNameSpecialistControl);
+     setTimeout(()=>{
       this.userService.addSpecialist({
       firstName: this.firstNameSpecialistControl,
       lastName: this.lastNameSpecialistControl,
@@ -317,6 +318,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }).catch(err => {
       console.log(err);    
     })
+  
    
     setTimeout(()=>{
       this.showModal();
@@ -334,6 +336,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
     localStorage.setItem("specialist", JSON.stringify(obj));
     this.router.navigate(['myShifts']);
+    },2000)
 
     
   }

@@ -1,3 +1,110 @@
+$reddishred : #E74C3C;
+$redderred : #C0392B;
+$reddishblue : #3c4de7;
+$redderblue: #1976D2;
+$reddishgrey :grey;
+$reddergrey: #9e9e9e;
+$cloud : #ECF0F1;
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: $cloud;
+}
+
+.flat-button-red {
+  position: relative;
+  width: 250px; height: 60px;
+  background: $reddishred;
+  margin: 0 auto;
+  margin-top: 40px;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  transition: color .3s;
+  /* Typo */
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+}
+
+.flat-button-red:after {
+  position: absolute;
+  top: 90%; left: 0;
+  width: 100%; height: 100%;
+  background: $redderred;
+  content: "";
+  z-index: -2;
+  transition: transform .3s;
+}
+
+.flat-button-grey {
+  position: relative;
+  width: 250px; height: 60px;
+  background: $reddishgrey;
+  margin: 0 auto;
+  margin-top: 40px;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  transition: color .3s;
+  /* Typo */
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+}
+
+.flat-button-grey:after {
+  position: absolute;
+  top: 90%; left: 0;
+  width: 100%; height: 100%;
+  background: $reddergrey;
+  content: "";
+  z-index: -2;
+  transition: transform .3s;
+}
+
+.flat-button-blue {
+  position: relative;
+  width: 250px; height: 60px;
+  background: $reddishblue;
+  margin: 0 auto;
+  margin-top: 40px;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  transition: color .3s;
+  /* Typo */
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+}
+
+.flat-button-blue:after {
+  position: absolute;
+  top: 90%; left: 0;
+  width: 100%; height: 100%;
+  background: $redderblue;
+  content: "";
+  z-index: -2;
+  transition: transform .3s;
+}
+
+.flat-button-blue:hover::after {
+  transform: translateY(-80%);
+  transition: transform .3s;
+}
+.flat-button-red:hover::after {
+  transform: translateY(-80%);
+  transition: transform .3s;
+}
+.flat-button-grey:hover::after {
+  transform: translateY(-80%);
+  transition: transform .3s;
+}
+
+/////
 .form-signin {
       width: 100%;
       max-width: 330px;

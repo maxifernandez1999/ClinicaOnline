@@ -17,10 +17,12 @@ export class LoginComponent implements OnInit {
   administrators:Administrator[] = [];
   specialists:Specialist[] = [];
   patients:Patient[] = [];
+
   currentUser:any = "";
   isPatient:boolean = false;
   isSpecialist:boolean = false;
   isAdministrator:boolean = false;
+  btn:boolean = false;
 
 
   @ViewChild('email') email:ElementRef;
