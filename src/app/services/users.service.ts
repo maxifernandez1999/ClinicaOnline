@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -15,7 +16,8 @@ export class UsersService {
   private communicatorLoginPatient = new BehaviorSubject<any>('');
   public communicatorLoginPatient$ = this.communicatorLoginPatient.asObservable();
   constructor(private readonly firestore: AngularFirestore,
-              private readonly storage:AngularFireStorage) { 
+              private readonly storage:AngularFireStorage,
+              private readonly authFire: AngularFireAuth) { 
     // this.patients = firestore.collection('patients').valueChanges();
     // this.specialists = firestore.collection('specialists').valueChanges();
     // this.administrators = firestore.collection('administrators').valueChanges();
@@ -35,6 +37,23 @@ export class UsersService {
     return this.administrators;
   }
 
+  async login(email:string, password:string):Promise<any>{
+    return await this.authFire.signInWithEmailAndPassword(
+      email,
+      password
+    );
+  }
+
+  async logout():Promise<void>{
+    return await this.authFire.signOut();
+  }
+
+  async register(email:string, password:string):Promise<any>{
+    return await this.authFire.createUserWithEmailAndPassword(
+      email,
+      password
+    )
+  }
   addPatient(data:any):Promise<any>{
     return this.firestore.collection('patients').add(data);
   }
@@ -48,14 +67,14 @@ export class UsersService {
   }
 
   
-  uploadFile(file:File, folder:any, email:any, id:any):void{
-    const filePath = `${folder}/${email}_${id}.png`;
+  uploadFile(file:File, folder:any, email:any, firstName:any):void{
+    const filePath = `${folder}/${email}_${firstName}.png`;
     const ref = this.storage.ref(filePath);
     const task = this.storage.upload(filePath,file);
   }
 
-  downloadFile():Observable<any>{
-    const ref = this.storage.ref('patients/maxi@maxi.com_23456789.png');
+  downloadFile(filePath:string):Observable<any>{
+    const ref = this.storage.ref(filePath);
     return ref.getDownloadURL();
   }
 

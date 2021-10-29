@@ -44,7 +44,8 @@ export class ProfileComponent implements OnInit {
             r.data().dni,
             r.data().email,
             r.data().password,
-            r.data().socialWork);
+            r.data().socialWork,
+            r.data().photo);
         }
         
 
@@ -62,7 +63,8 @@ export class ProfileComponent implements OnInit {
             r.data().age,
             r.data().dni,
             r.data().email,
-            r.data().password);
+            r.data().password,
+            r.data().photo);
         }
         
 
@@ -71,10 +73,23 @@ export class ProfileComponent implements OnInit {
   }
 
   downloadFile():void{
-    this.userService.downloadFile().subscribe(res => {
-      console.log(res);
-      this.profileUrl = res;
-    });
+    if (this.key === 'patient') {
+      this.userService.downloadFile(this.patient.photo).subscribe(res => {
+        console.log(res);
+        this.profileUrl = res;
+      });
+    }else if(this.key === 'specialist'){
+      this.userService.downloadFile(this.specialist.photo).subscribe(res => {
+        console.log(res);
+        this.profileUrl = res;
+      });
+    }else if(this.key === 'administrator'){
+      this.userService.downloadFile(this.administrator.photo).subscribe(res => {
+        console.log(res);
+        this.profileUrl = res;
+      });
+    }
+    
   }
   getSpecialist():void{
     this.userService.Specialists.subscribe(res => {
@@ -89,7 +104,8 @@ export class ProfileComponent implements OnInit {
             r.data().password,
             r.data().speciality,
             r.data().access,
-            r.data().disponibility);
+            r.data().disponibility,
+            r.data().photo);
         }
         
 

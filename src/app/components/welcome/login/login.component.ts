@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
     this.getAdministrators();
     this.getSpecialists();
     this.getPatients();
+    
   }
 
   get Email():any{
@@ -63,7 +64,8 @@ export class LoginComponent implements OnInit {
                                           r.data().dni,
                                           r.data().email,
                                           r.data().password,
-                                          r.data().socialWork);
+                                          r.data().socialWork,
+                                          r.data().photo);
 
         this.patients.push(patient);
       });
@@ -84,7 +86,8 @@ export class LoginComponent implements OnInit {
                                                     r.data().password,
                                                     r.data().speciality,
                                                     r.data().access,
-                                                    r.data().disponibility);
+                                                    r.data().disponibility,
+                                                    r.data().photo);
 
         this.specialists.push(specialist);
       });
@@ -100,7 +103,8 @@ export class LoginComponent implements OnInit {
                                                             r.data().age,
                                                             r.data().dni,
                                                             r.data().email,
-                                                            r.data().password);
+                                                            r.data().password,
+                                                            r.data().photo);
 
         this.administrators.push(administrator);
       });
@@ -158,6 +162,14 @@ export class LoginComponent implements OnInit {
   }
 
   login():void{
+    this.userService.register(
+      this.Email,
+      this.Password
+    ).then(response => {
+      console.log(response);
+    }).catch(error => {
+      console.log(error);
+    })
     console.log(this.isRegister())
     if (this.isRegister() === "access" || this.isRegister() === "register") {
       if (this.isPatient) {

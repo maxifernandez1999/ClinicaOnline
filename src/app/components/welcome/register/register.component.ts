@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   filesPatient:any[] = [];
   filesSpecialist:any[] = [];
   id:string;
+  filePath:string;
   constructor(private renderer:Renderer2,
               private fb: FormBuilder,
               private userService:UsersService,
@@ -224,10 +225,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     console.log(this.filesSpecialist);
   }
 
-  UploadFile(folder:string,files:any):void{
+  UploadFile(folder:string,files:any,email:any,firstName:any):void{
     for (const file of files) {
-      this.userService.uploadFile(file,folder,this.emailPatientControl,this.id);
-      
+      this.userService.uploadFile(file,folder,email,firstName);
+      const filePathReference = `${folder}/${email}_${firstName}.png`;
+      this.userService.downloadFile(filePathReference).subscribe(res => {
+        console.log(res);
+        this.filePath = res;
+      });
     }
   }
   getIDPatient():void{
@@ -258,39 +263,46 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.renderer.addClass(el,'show');
   }
   addPatient(){
-    this.userService.addPatient({
-      firstName: this.firstNamePatientControl,
-      lastName: this.lastNamePatientControl,
-      age: this.agePatientControl,
-      dni: this.dniPatientControl,
-      email: this.emailPatientControl,
-      password: this.passwordPatientControl,
-      socialWork: this.socialWorkPatientControl
-    }).then(res => {
-      console.log(res);
-      this.getIDPatient();
-    }).catch(err => {
-      console.log(err);    
-    });
-    this.UploadFile('patients',this.filesPatient);
+    this.UploadFile('patients',this.filesPatient,this.emailPatientControl,this.firstNamePatientControl);
     setTimeout(()=>{
-      this.showModal();
-    },1000);
-    let obj = {
-      firstName: this.firstNamePatientControl,
-      lastName: this.lastNamePatientControl,
-      age: this.agePatientControl,
-      dni: this.dniPatientControl,
-      email: this.emailPatientControl,
-      password: this.passwordPatientControl,
-      socialWork: this.socialWorkPatientControl
-    }
-    localStorage.setItem("patient", JSON.stringify(obj));
-    this.router.navigate(['myShifts']);
+      this.userService.addPatient({
+        firstName: this.firstNamePatientControl,
+        lastName: this.lastNamePatientControl,
+        age: this.agePatientControl,
+        dni: this.dniPatientControl,
+        email: this.emailPatientControl,
+        password: this.passwordPatientControl,
+        socialWork: this.socialWorkPatientControl,
+        photo: this.filePath
+  
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);    
+      });
+      
+      setTimeout(()=>{
+        this.showModal();
+      },1000);
+      let obj = {
+        firstName: this.firstNamePatientControl,
+        lastName: this.lastNamePatientControl,
+        age: this.agePatientControl,
+        dni: this.dniPatientControl,
+        email: this.emailPatientControl,
+        password: this.passwordPatientControl,
+        socialWork: this.socialWorkPatientControl,
+        photo: this.filePath
+      }
+      localStorage.setItem("patient", JSON.stringify(obj));
+      this.router.navigate(['myShifts']);
+    },1500)
+    
   }
 
   addSpecialist(){
-    this.userService.addSpecialist({
+     this.UploadFile('specialist',this.filesSpecialist,this.emailSpecialistControl,this.firstNameSpecialistControl);
+      this.userService.addSpecialist({
       firstName: this.firstNameSpecialistControl,
       lastName: this.lastNameSpecialistControl,
       age: this.ageSpecialistControl,
@@ -298,15 +310,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       email: this.emailSpecialistControl,
       password: this.passwordSpecialistControl,
       speciality: this.specialityControl,
-      access: false
+      access: false,
+      photo: this.filePath
     }).then(res => {
       console.log(res);
-      this.getIDSpecialist();
     }).catch(err => {
       console.log(err);    
     })
-    this.UploadFile('specialist',this.filesSpecialist);
-    console.log(this.specialityControl);
+   
     setTimeout(()=>{
       this.showModal();
     },1000);
@@ -318,7 +329,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       email: this.emailSpecialistControl,
       password: this.passwordSpecialistControl,
       speciality: this.specialityControl,
-      access: false
+      access: false,
+      photo: this.filePath
     }
     localStorage.setItem("specialist", JSON.stringify(obj));
     this.router.navigate(['myShifts']);

@@ -6,6 +6,7 @@ export class Administrator {
       public dni:string;
       public email:string;
       public password:string;
+      public photo:string
 
       constructor(id:string,
                   firstName:string,
@@ -13,7 +14,8 @@ export class Administrator {
                   age:string,
                   dni:string,
                   email:string,
-                  password:string) {
+                  password:string,
+                  photo:string) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.age = age;
@@ -21,5 +23,6 @@ export class Administrator {
             this.email = email;
             this.id = id;
             this.password = password;
+            this.photo = photo;
       }
 }

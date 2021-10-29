@@ -25,7 +25,7 @@ export class AdministratorComponent implements OnInit {
     this.getAdministrators();
     this.getSpecialists();
     this.getPatients();
-    this.downloadFile();
+    // this.downloadFile();
   }
 
   getAdministrators():void{
@@ -37,7 +37,8 @@ export class AdministratorComponent implements OnInit {
                                 r.data().age,
                                 r.data().dni,
                                 r.data().email,
-                                r.data().password);
+                                r.data().password,
+                                r.data().photo);
 
         this.administrators.push(administrator);
       });
@@ -54,7 +55,8 @@ export class AdministratorComponent implements OnInit {
                                 r.data().dni,
                                 r.data().email,
                                 r.data().password,
-                                r.data().socialWork);
+                                r.data().socialWork,
+                                r.data().photo);
 
         this.patients.push(patient);
       });
@@ -75,7 +77,8 @@ export class AdministratorComponent implements OnInit {
                                 r.data().password,
                                 r.data().speciality,
                                 r.data().access,
-                                r.data().disponibility);
+                                r.data().disponibility,
+                                r.data().photo);
 
         this.specialists.push(specialist);
       });
@@ -95,8 +98,8 @@ export class AdministratorComponent implements OnInit {
   }
   
 
-  downloadFile():void{
-    this.userService.downloadFile().subscribe(res => {
+  downloadFile(filePath:string):void{
+    this.userService.downloadFile(filePath).subscribe(res => {
       console.log(res);
       this.profileUrl = res;
     });

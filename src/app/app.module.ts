@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ShiftsComponent } from './components/shifts/shifts.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
