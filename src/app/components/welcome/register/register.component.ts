@@ -20,6 +20,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   filesSpecialist:any[] = [];
   id:string;
   filePath:string;
+  filePathReference:any;
+
   constructor(private renderer:Renderer2,
               private fb: FormBuilder,
               private userService:UsersService,
@@ -208,7 +210,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   getFilePatient(e:any):any{
-    console.log(e);
     for (const file of e.target.files) {
       this.filesPatient.push(file);
     }
@@ -217,7 +218,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   getFileSpecialist(e:any):any{
-    console.log(e);;
     for (const file of e.target.files) {
       this.filesSpecialist.push(file);
     }
@@ -225,16 +225,40 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     console.log(this.filesSpecialist);
   }
 
-  UploadFile(folder:string,files:any,email:any,firstName:any):void{
-    for (const file of files) {
-      this.userService.uploadFile(file,folder,email,firstName);
-      const filePathReference = `${folder}/${email}_${firstName}.png`;
-      this.userService.downloadFile(filePathReference).subscribe(res => {
-        console.log(res);
-        this.filePath = res;
-      });
+  UploadFilePatients(){
+    for (const file of this.filesPatient) {
+      this.filePathReference = `patients/${this.emailPatientControl}_${this.firstNamePatientControl}.png`;
+      this.userService.uploadFile(file,"patients",this.emailPatientControl,this.firstNamePatientControl).then(res => {
+        this.userService.downloadFile(this.filePathReference).subscribe(res => {
+          console.log(res);
+          this.filePath = res;
+          this.addPatient();
+        });
+      })
+      
+      
     }
+    
   }
+
+  
+
+  UploadFileSpecialist():void{
+    for (const file of this.filesSpecialist) {
+      this.filePathReference = `specialists/${this.emailSpecialistControl}_${this.firstNameSpecialistControl}.png`;
+      this.userService.uploadFile(file,"specialists",this.emailSpecialistControl,this.firstNameSpecialistControl).then(res => {
+        this.userService.downloadFile(this.filePathReference).subscribe(res => {
+          console.log(res);
+          this.filePath = res;
+          this.addSpecialist();
+        });
+      })
+      
+      
+    }
+    
+  }
+
   getIDPatient():void{
     this.userService.Patients.subscribe(res => {
       res.forEach(r => {
@@ -263,8 +287,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.renderer.addClass(el,'show');
   }
   addPatient(){
-    this.UploadFile('patients',this.filesPatient,this.emailPatientControl,this.firstNamePatientControl);
-    setTimeout(()=>{
       this.userService.addPatient({
         firstName: this.firstNamePatientControl,
         lastName: this.lastNamePatientControl,
@@ -296,13 +318,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       }
       localStorage.setItem("patient", JSON.stringify(obj));
       this.router.navigate(['myShifts']);
-    },2000)
+
     
   }
 
   addSpecialist(){
-     this.UploadFile('specialist',this.filesSpecialist,this.emailSpecialistControl,this.firstNameSpecialistControl);
-     setTimeout(()=>{
+
       this.userService.addSpecialist({
       firstName: this.firstNameSpecialistControl,
       lastName: this.lastNameSpecialistControl,
@@ -336,7 +357,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
     localStorage.setItem("specialist", JSON.stringify(obj));
     this.router.navigate(['myShifts']);
-    },2000)
+
 
     
   }

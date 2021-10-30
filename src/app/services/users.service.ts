@@ -67,10 +67,10 @@ export class UsersService {
   }
 
   
-  uploadFile(file:File, folder:any, email:any, firstName:any):void{
+  uploadFile(file:File, folder:any, email:any, firstName:any){
     const filePath = `${folder}/${email}_${firstName}.png`;
     const ref = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath,file);
+    return ref.put(file);
   }
 
   downloadFile(filePath:string):Observable<any>{

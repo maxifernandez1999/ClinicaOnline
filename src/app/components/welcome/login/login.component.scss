@@ -15,8 +15,12 @@ body {
 
 .flat-button-red {
   position: relative;
+  
+  background-image:url(https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/patients%2Fmiriam%40gmail.com_Miriam.png?alt=media&token=7fd1aef9-9034-4e15-a626-72a9fb1089ea);
+  // background: $reddishred;
+  background-repeat:no-repeat;
+  background-position:center;
   width: 250px; height: 60px;
-  background: $reddishred;
   margin: 0 auto;
   margin-top: 40px;
   overflow: hidden;
@@ -53,6 +57,9 @@ body {
   line-height: 60px;
   text-align: center;
   color: #fff;
+
+  background-repeat:no-repeat;
+  background-position:center;
 }
 
 .flat-button-grey:after {
@@ -67,8 +74,16 @@ body {
 
 .flat-button-blue {
   position: relative;
+  background-image:url(https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/specialists%2Flionel%40gmail.com_Lionel.png?alt=media&token=5c3649a0-0c84-4bba-817a-4e9b61ba47a6);
+  // background: $reddishred;
+  background-repeat:no-repeat;
+  position: relative;
+  background-position:center;
+
+  
+  
   width: 250px; height: 60px;
-  background: $reddishblue;
+  // background: $reddishblue;
   margin: 0 auto;
   margin-top: 40px;
   overflow: hidden;

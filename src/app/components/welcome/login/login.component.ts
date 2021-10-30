@@ -46,10 +46,79 @@ export class LoginComponent implements OnInit {
     return this.password.nativeElement.value;
   }
 
+  set Email(email:string){
+    this.email.nativeElement.value = email;
+  }
+
+  set Password(password:string){
+    this.password.nativeElement.value = password;
+  }
+
   access():void{
     this.email.nativeElement.value = "maradona@gmail.com";
     this.password.nativeElement.value = "marado";
 
+  }
+
+  accessSpecialist(name:string):void{
+    switch (name) {
+      case 'Juan Carlos':
+        this.Email = 'juanCarlos@gmail.com';
+        this.Password = '123456';
+        this.setRegister();
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+  accessPatient(name:string):void{
+    switch (name) {
+      case 'Maxi':
+        this.Email = 'maxi@gmail.com';
+        this.Password = '123456';
+        this.setRegister();
+        break;
+      default:
+        break;
+    }
+    
+  }
+  accessAdmin(name:string):void{
+    switch (name) {
+      case 'Diego':
+        this.Email = 'diego@gmail.com';
+        this.Password = 'marado';
+        this.setRegister();
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+  setRegister(){
+    if (this.isRegister() === "access" || this.isRegister() === "register") {
+      if (this.isPatient) {
+        this.sendDataLogin("patient");
+        localStorage.setItem("patient", JSON.stringify(this.currentUser));
+        this.router.navigate(['myShifts']);
+      }else if(this.isSpecialist){
+        this.sendDataLogin("specialist");
+        localStorage.setItem("specialist", JSON.stringify(this.currentUser));
+        this.router.navigate(['myShifts']);
+      }else if(this.isAdministrator){
+        this.sendDataLogin("administrator");
+        localStorage.setItem("administrator", JSON.stringify(this.currentUser));
+        this.router.navigate(['admin']);
+      }
+      
+    }else if(this.isRegister() === "no-access"){
+      alert('The specialist does not have access');
+    }else{
+      alert('no registed');
+    }
   }
 
   sendDataLogin(data:string){

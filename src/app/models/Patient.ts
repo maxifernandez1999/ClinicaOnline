@@ -10,7 +10,7 @@ export class Patient {
       public email:string;
       public password:string;
       public socialWork:string;
-      public photo:string;
+      public photo:string[];
 
       constructor(id:string,
                   firstName:string,
@@ -20,7 +20,7 @@ export class Patient {
                   email:string,
                   password:string,
                   socialWork:string,
-                  photo:string) {
+                  photo:string[]) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.age = age;

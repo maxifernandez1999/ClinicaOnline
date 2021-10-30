@@ -74,10 +74,10 @@ export class ProfileComponent implements OnInit {
 
   downloadFile():void{
     if (this.key === 'patient') {
-      this.userService.downloadFile(this.patient.photo).subscribe(res => {
-        console.log(res);
-        this.profileUrl = res;
-      });
+      // this.userService.downloadFile(this.patient.photo).subscribe(res => {
+      //   console.log(res);
+      //   this.profileUrl = res;
+      // });
     }else if(this.key === 'specialist'){
       this.userService.downloadFile(this.specialist.photo).subscribe(res => {
         console.log(res);
