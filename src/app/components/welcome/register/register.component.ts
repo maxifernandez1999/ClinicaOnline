@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   id:string;
   filePath:string;
   filePathReference:any;
-
   constructor(private renderer:Renderer2,
               private fb: FormBuilder,
               private userService:UsersService,
@@ -98,41 +97,17 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           Validators.maxLength(20)
         ]
       ],
-      ageSpecialist: [
-        '',
-        [
-          Validators.required,
-          Validators.max(99)
-        ]
-      ],
-      dniSpecialist: [
-        '',
-        [
-          Validators.required,
-          Validators.min(10000000),
-          Validators.max(99000000)
-        ]
-      ],
-      emailSpecialist: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ],
-      passwordSpecialist: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20)
-        ]
-      ],
-      speciality:[
-        '',
-        [
-          Validators.required
-        ]
-      ]
+      ageSpecialist: ['',[Validators.required,
+                          Validators.max(99)]],
+      dniSpecialist: ['',[Validators.required,
+                          Validators.min(10000000),
+                          Validators.max(99000000)]],
+      emailSpecialist: ['',[Validators.required,
+                            Validators.email]],
+      passwordSpecialist: ['',[Validators.required,
+                               Validators.maxLength(20)]],
+      speciality:['',Validators.required],
+      recaptcha: ['', Validators.required]
 
     });
   }
