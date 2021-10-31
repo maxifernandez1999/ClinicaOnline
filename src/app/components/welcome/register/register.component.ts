@@ -21,10 +21,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   id:string;
   filePath:string;
   filePathReference:any;
+  siteKey:string;
   constructor(private renderer:Renderer2,
               private fb: FormBuilder,
               private userService:UsersService,
-              private router:Router ) {}
+              private router:Router ) {
+                this.siteKey = "6Ld98wYdAAAAADzswHnqvyl4oKuduQrbAPLW_iNW"
+              }
 
   ngOnInit(): void {
     this.initForm();

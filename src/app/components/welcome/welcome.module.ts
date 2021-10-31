@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome.component';
+import { NgxCaptchaModule } from 'ngx-captcha';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { WelcomeComponent } from './welcome.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxCaptchaModule
   ]
 })
 export class WelcomeModule { }

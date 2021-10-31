@@ -17,7 +17,6 @@ import { ShiftsComponent } from './components/shifts/shifts.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -38,8 +37,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     AngularFirestoreModule,
     AngularFireStorageModule,
     ReactiveFormsModule,
-    AngularFireAuthModule,
-    NgxCaptchaModule
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
