@@ -56,7 +56,7 @@ export class ShiftsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy():void{
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
   resetFilters(){
     window.location.reload();

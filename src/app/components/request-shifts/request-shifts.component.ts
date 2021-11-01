@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {  Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
 import { ShiftsService } from 'src/app/services/shifts.service';
 import { UsersService } from 'src/app/services/users.service';
+/// <reference types="jquery" />
 
 @Component({
   selector: 'app-request-shifts',
@@ -18,14 +19,20 @@ export class RequestShiftsComponent implements OnInit {
   subscription:Subscription;
   isPatient:boolean = false;
   isAdmin:boolean = false;
-
+  specialist:string;
+  speciality:string;
   specialities:string[] = [];
   specialists:string[] = [];
   patientsName:string[] = [];
+  showSpecialities:boolean = false;
+  showShifts:boolean = false;
+  ShiftAvailable:string;
+  selected:boolean = false;
   constructor(private readonly shiftsService: ShiftsService,
               private fb:FormBuilder,
               private router:Router,
-              private userService:UsersService) { }
+              private userService:UsersService,
+              private renderer:Renderer2) { }
 
 
   ngOnInit(): void {
@@ -39,32 +46,39 @@ export class RequestShiftsComponent implements OnInit {
   get patientNameControl():any{
     return this.formShifts.get('patientName').value;
   }
-  get specialistControl():any{
-    return this.formShifts.get('specialist').value;
-  }
-  get specialityControl():any{
-    return this.formShifts.get('speciality').value;
-  }
-  get dayControl():any{
-    return this.formShifts.get('day').value;
-  }
-  get monthControl():any{
-    return this.formShifts.get('month').value;
-  }
-  get hourControl():any{
-    return this.formShifts.get('hour').value;
-  }
+  
 
   public get Form():any{
     return this.formShifts.controls;
   }
 
+  getSpecialistSelected(specialist:string,e:any):void{
+    e.target.className = 'btn btn-danger m-3'
+    $(".btn-success").prop('disabled', true);
+    this.specialist = specialist;
+    this.showSpecialities = true;
+  }
+  getSpecialitySelected(speciality:string,e:any):void{
+    e.target.className = 'btn btn-danger m-3'
+    $(".btn-info").prop('disabled', true);
+    this.speciality = speciality;
+    this.showShifts = true
+  }
 
+  getShifts(e:any):void{
+    
+    this.ShiftAvailable = e.target.innerHTML
+    $("#btn").prop('disabled', false);
+    console.log(this.getDateAndTime())
+    console.log(this.specialist)
+    console.log(this.speciality)
+    console.log(this.ShiftAvailable)
+  }
   localStorageData():void{
     if(localStorage.hasOwnProperty("administrator")){
       this.isAdmin = true;
     }else if(localStorage.hasOwnProperty("patient")){
-      this.isAdmin = true;
+      this.isPatient = true;
     }else{
       this.router.navigate(['/'])
     }
@@ -73,45 +87,15 @@ export class RequestShiftsComponent implements OnInit {
     return JSON.parse(localStorage.getItem(user));
   }
 
+  isSelected(){
+    this.selected = true;
+  }
   initForm():void{
     this.formShifts = this.fb.group({
       patientName: [
         '',
         [
           Validators.required
-        ]
-      ],
-      specialist: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-      speciality: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-      day: [
-        '',
-        [
-          Validators.required,
-          Validators.max(30)
-        ]
-      ],
-      month: [
-        '',
-        [
-          Validators.required,
-          Validators.max(12)
-        ]
-      ],
-      hour: [
-        '',
-        [
-          Validators.required,
-          Validators.max(24)
         ]
       ]
     });
@@ -132,34 +116,45 @@ export class RequestShiftsComponent implements OnInit {
       });
     });
   }
+
+  getDateAndTime(){
+    return this.ShiftAvailable.split(' ');
+  }
   addShift(){
+    
     if(this.isAdmin){
-      console.log(this.dayControl)
-      this.shiftsService.addShift({
-        patientName: this.patientNameControl,
-        specialist: this.specialistControl,
-        speciality: this.specialityControl,
-        date: this.dayControl +'/'+ this.monthControl,
-        time: this.hourControl
-      }).then(res => {
-        console.log(res);
-      }).catch(err => {
-        console.log(err);    
-      });
-      window.location.reload();
+      if(this.selected){
+        this.shiftsService.addShift({
+          patientName: this.patientNameControl,
+          specialist: this.specialist,
+          speciality: this.speciality,
+          date: this.getDateAndTime()[0],
+          time: this.getDateAndTime()[1]
+        }).then(res => {
+          console.log(res);
+          window.location.reload();
+        }).catch(err => {
+          console.log(err);    
+        });
+      }else{
+        alert('seleccione un paciente');
+      }
+      
+      
     }else if(this.isPatient){
       this.shiftsService.addShift({
         patientName: this.getDataLocalStorage("patient").firstName,
-        specialist: this.specialistControl,
-        speciality: this.specialityControl,
-        date: this.dayControl +'/'+ this.monthControl,
-        time: this.hourControl
+        specialist: this.specialist,
+        speciality: this.speciality,
+        date: this.getDateAndTime()[0],
+        time: this.getDateAndTime()[1]
       }).then(res => {
         console.log(res);
+        window.location.reload();
       }).catch(err => {
         console.log(err);    
       });
-      window.location.reload();
+      
     }
     
   }

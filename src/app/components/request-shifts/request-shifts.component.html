@@ -5,80 +5,25 @@
                 <div class="form-group">
                     <select  formControlName="patientName"      
                             class="form-control">
-                      <option *ngFor="let name of patientsName" [ngValue]="name" selected>{{name}}</option>
+                      <option *ngFor="let name of patientsName" (click)="isSelected()" [ngValue]="name">{{name}}</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <select  formControlName="speciality"      
-                  class="form-control">
-                      <option *ngFor="let speciality of specialities" [ngValue]="speciality" selected>{{speciality}}</option>
-                  </select>
+                <div #specialist class="form-group">
+                    <h2>Specialists</h2>
+                    <button  *ngFor="let specialist of specialists" class="btn btn-success  m-3" (click)="getSpecialistSelected(specialist,$event)">{{specialist}}</button>
                 </div>
-                  <div class="form-group">
-                    <select formControlName="specialist"      class="form-control">
-                        <option *ngFor="let specialist of specialists" [ngValue]="specialist" selected>{{specialist}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="number"
-                    class="form-control"
-                    placeholder="day"
-                    value=""
-                    formControlName="day"
-                    [ngClass]="{'is-invalid': Form.day.touched && Form.day.errors}"
-                    required 
-                    />
-                    <div *ngIf="Form.day.touched && Form.day.errors"    
-                    class="invalid-feedback">
-                        <div *ngIf="Form.day.errors.required">
-                            Is required
-                        </div>
-                        <div *ngIf="Form.day.errors.max">
-                            30 max
-                        </div>
-                    </div>
+                <div *ngIf="showSpecialities" class="form-group">
+                    <h2>Specialities</h2>
+                    <button  *ngFor="let speciality of specialities" class="btn btn-info  m-3" (click)="getSpecialitySelected(speciality,$event)">{{speciality}}</button>
                   </div>
-                  
-                <div class="form-group">
-                    <input type="number"
-                    class="form-control"
-                    placeholder="Month"
-                    value=""
-                    formControlName="month"
-                    [ngClass]="{'is-invalid': Form.month.touched && Form.month.errors}"
-                    required 
-                    />
-                    <div *ngIf="Form.month.touched && Form.month.errors"    
-                    class="invalid-feedback">
-                        <div *ngIf="Form.month.errors.required">
-                            Is required
-                        </div>
-                        <div *ngIf="Form.month.errors.max">
-                            12 max
-                        </div>
-                    </div>
+                <div *ngIf="showShifts" class="form-group">
+                    <h2>Available shifts</h2>
+                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">30/9 12:00</button>
+                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">30/9 12:00</button>
+                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">30/9 12:00</button>
                 </div>
                 <div class="form-group">
-                    <input type="number"
-                    class="form-control"
-                    placeholder="Hour"
-                    value=""
-                    formControlName="hour"
-                    [ngClass]="{'is-invalid': Form.hour.touched && Form.hour.errors}"
-                    required 
-                    />
-                    <div *ngIf="Form.hour.touched && Form.hour.errors"    
-                    class="invalid-feedback">
-                        <div *ngIf="Form.hour.errors.required">
-                            Is required
-                        </div>
-                        <div *ngIf="Form.hour.errors.max">
-                            24 max
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="button" (click)="addShift()" class="btn btn-primary" value="Submit">
+                    <input id="btn" type="button" (click)="addShift()" class="btn btn-primary" value="Submit" disabled>
                 </div>
               </div>   
       </div>

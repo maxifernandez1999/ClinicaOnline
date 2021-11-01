@@ -105,3 +105,87 @@
       margin-bottom: -15%;
       color: #495057;
   }
+
+  ///************
+  
+#btn-mas{
+    display: none;
+}
+.container2{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+.redes a, .btn-mas label{
+    display: block;
+    text-decoration: none;
+    
+    color: #fff;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0px 1px 10px rgba(0,0,0,0.4);
+    transition: all 500ms ease;
+}
+.user1{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/specialists%2Flionel%40gmail.com_Lionel.png?alt=media&token=f7653dfb-b75d-4a69-be95-63a8a6a5a97e");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.user2{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/specialists%2Fpepe%40gmail.com_Pepe.png?alt=media&token=07fa3f80-a7bf-41b3-9a69-80833c937d0b");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.user3{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/patients%2Fasda%40gmail.com_asdas.png?alt=media&token=a138c5bd-9daf-48e1-86ea-a3fef5c1cbbb");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.user4{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/patients%2Fmiriam%40gmail.com_Miriam.png?alt=media&token=7fd1aef9-9034-4e15-a626-72a9fb1089ea");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.user5{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/patients%2Fmiriam%40gmail.com_asdas.png?alt=media&token=fa7acc4a-650a-4be6-81fc-0dc4fb655b9a");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.user6{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinicaonline-65c8f.appspot.com/o/patients%2Fmiriam%40gmail.com_asdas.png?alt=media&token=fa7acc4a-650a-4be6-81fc-0dc4fb655b9a");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.redes a:hover{
+    background: #fff;
+    color: #cc2b2b;
+}
+.redes a{
+    margin-bottom: -15px;
+    opacity: 0;
+    visibility: hidden;
+}
+#btn-mas:checked~ .redes a{
+    margin-bottom: 10px;
+    opacity: 1;
+    visibility: visible;
+}
+.btn-mas label{
+    cursor: pointer;
+    background: #f44141;
+    font-size: 23px;
+}
+#btn-mas:checked ~ .btn-mas label{
+    transform: rotate(135deg);
+    font-size: 25px;
+}
+
