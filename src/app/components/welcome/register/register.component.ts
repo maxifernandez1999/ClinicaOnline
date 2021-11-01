@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
               private fb: FormBuilder,
               private userService:UsersService,
               private router:Router ) {
-                this.siteKey = "6Ld98wYdAAAAADzswHnqvyl4oKuduQrbAPLW_iNW"
+                this.siteKey = "6LcMtAcdAAAAAAgU0GIxs-ft9CwDIWApsINlvemG"
               }
 
   ngOnInit(): void {
