@@ -30,3 +30,26 @@ Dentro tambien podemos encontrar tres botones:
 - "Profile" : Se podra acceder a la seccion donde estan los datos del perfil logueado.
 
 ![alt text](https://github.com/maxifernandez1999/ClinicaOnline/blob/main/src/assets/Screenshot%20(364).png)
+
+### Shifts
+
+En esta seccion se podra cargar los turnos de la clinica. Si el perfil logueado es administrador o especialista tendra una opcion se seleccionar el nombre del paciente que desea sacar un turno (entre los pacientes registrados). Si el perfil es paciente, esta opcion se desabilita ya que no es necesario (se utiliza los datos del paciente registrado para la carga). En las siguientes dos casillas se podra seleccionar especialidad y especialista respectivamente. 
+En las casillas day, month y hour de seleccionara el dia, mes y hora que se debe sacar el turno. Luego se debe presionar el boton "Submit" para cargar el turno.
+
+![alt text](https://github.com/maxifernandez1999/ClinicaOnline/blob/main/src/assets/Screenshot%20(365).png)
+
+### Load Shifts
+
+En esta seccion podemos ver los turnos asignados al usuario logueado. A su vez tenemos un boton "Cancel" para cancelar el turno, y botones para filtrar los turnos por especialidad y especialista
+
+![alt text](https://github.com/maxifernandez1999/ClinicaOnline/blob/main/src/assets/Screenshot%20(366).png)
+
+### Profile 
+
+En esta seccion se encuentra los datos del perfil logueado.
+
+![alt text](https://github.com/maxifernandez1999/ClinicaOnline/blob/main/src/assets/Screenshot%20(367).png)
+
+Si el usuario logueado es especialista, podremos ingresar su disponibilidad horaria. Complete los campos y luego presione "Change" para cambiar su disponibilidad horaria.
+
+![alt text](https://github.com/maxifernandez1999/ClinicaOnline/blob/main/src/assets/Screenshot%20(369).png)
