@@ -42,4 +42,13 @@ export class ShiftsService {
   addShift(data:any):Promise<any>{
     return this.firestore.collection('shifts').add(data);
   }
+  UpdateShiftCommentary(id:string,commentary:string):Promise<any>{
+    return this.firestore.collection("shifts").doc(id).update({commentary: commentary});
+  }
+  UpdateShiftState(id:string,state:string):Promise<any>{
+    return this.firestore.collection("shifts").doc(id).update({state: state});
+  }
+  UpdateShiftAttention(id:string,attention:string):Promise<any>{
+    return this.firestore.collection("shifts").doc(id).update({attention: attention});
+  }
 }

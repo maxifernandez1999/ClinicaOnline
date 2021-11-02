@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
@@ -11,7 +12,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private userService:UsersService) { }
+  constructor(private userService:UsersService,
+              private router:Router) { }
 
   key:string;
   localStorageData:any;
@@ -52,6 +54,11 @@ export class ProfileComponent implements OnInit {
       });
 
     });
+  }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['register']);
   }
   getAdministrator():void{
     this.userService.Administrators.subscribe(res => {

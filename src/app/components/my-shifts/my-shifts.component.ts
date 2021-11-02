@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Patient } from 'src/app/models/Patient';
@@ -26,9 +26,12 @@ export class MyShiftsComponent implements OnInit {
   specialists: string[] = [];
   specialities: string[] = [];
   patients:string[] = [];
+  review:string;
 
   localStorageData:string;
 
+  @ViewChild('texarea') tex:ElementRef;
+  @ViewChild('att') att:ElementRef;
   ngOnInit(): void {
     this.getShifts();
     this.getLocalStorageData();
@@ -67,26 +70,37 @@ export class MyShiftsComponent implements OnInit {
     this.router.navigate(['profile']);
   }
 
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['register']);
+  }
   getUserName():void{
     let obj = JSON.parse(this.localStorageData);
     console.log(obj);
     this.name = obj.firstName;
   }
 
-  seeReview(id:string):void{
+  seeReview(commentary:string):void{
 
   }
   survey(id:string):void{
 
   }
-  rateAttention(id:string):void{
-
+  rateAttentionID(id:string):void{
+    this.ID = id;
+  }
+  rateAttention():void{
+    this.shiftService.UpdateShiftAttention(this.ID,this.att.nativeElement.value).then(res => {
+      console.log(res);
+      window.location.reload();
+    })
   }
   sendID(id:string){
     this.ID = id;
   }
   getReview():void{
-
+    this.review = this.tex.nativeElement.value;
+    this.cancelShiftnew();
   }
   refuseTurn(id:string):void{
 
@@ -107,7 +121,8 @@ export class MyShiftsComponent implements OnInit {
                                         r.data().date,
                                         r.data().time,
                                         r.data().state,
-                                        r.data().commentary);
+                                        r.data().commentary,
+                                        r.data().attention);
           this.shifts.push(shift);     
         });
         
@@ -208,14 +223,22 @@ export class MyShiftsComponent implements OnInit {
     })
   }
 
-  cancelShift(id: string) {
+  cancelShift(id:string):void{
     this.ID = id;
-    this.shiftService.cancelShift(id).then(res => {
-      console.log("exitoso")
-      window.location.reload();
-    }).catch(err => {
-      console.log(err);
+  }
+  cancelShiftnew() {
+    this.shiftService.UpdateShiftCommentary(this.ID,this.review).then(res => {
+      this.shiftService.UpdateShiftState(this.ID,'cancel').then(res => {
+        console.log(res);
+        window.location.reload();
+      })
     })
+    // this.shiftService.cancelShift(this.ID).then(res => {
+    //   console.log("exitoso")
+    //   window.location.reload();
+    // }).catch(err => {
+    //   console.log(err);
+    // })
 
   }
 

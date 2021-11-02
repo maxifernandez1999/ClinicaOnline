@@ -1,3 +1,4 @@
+<button type="button" class="btn btn-danger m-3" (click)="logout()">Logout</button>
 <input *ngIf="key === 'patient'" type="button" class="btn btn-success m-3" (click)="goRequestShifts()" value="Load Shifts">
 <input *ngIf="key === 'specialist' || key === 'patient'" type="button" class="btn btn-warning m-3" (click)="profile()" value="Profile">
 <div class="container-fluid table-center">
@@ -52,7 +53,7 @@
                         </tr>
                   </thead>
                   <tbody *ngFor="let shift of shiftsFilter">
-                        <tr *ngIf="shift !== null && key === 'patient'">
+                        <tr *ngIf="shift !== null && key === 'patient' && shift.state !== 'cancel'">
                               <td>{{shift.patientName}}</td>
                               <td>{{shift.speciality}}</td>
                               <td>{{shift.specialist}}</td>
@@ -61,12 +62,12 @@
                               <td><button *ngIf="shift.state !== 'realized'" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" (click)="cancelShift(shift.id)">
                                     Cancel
                                   </button></td>
-                              <td><input *ngIf="shift.commentary !== null && key === 'patient'" type="button" class="btn btn-info" value="See Review" (click)="seeReview(shift.id)"></td>
+                              <td><input *ngIf="shift.commentary !== '' && key === 'patient'" type="button" class="btn btn-info" value="See Review" (click)="seeReview(shift.commentary)"></td>
                               <td><input *ngIf="shift.state === 'realized'" type="button" class="btn btn-info" value="complete Survey" (click)="survey(shift.id)"></td>
-                              <td><input type="button" class="btn btn-info" value="Rate Attention" (click)="rateAttention(shift.id)"></td>
+                              <td><input *ngIf="shift.state === 'realized'" type="button" class="btn btn-info" value="Rate Attention" data-toggle="modal" data-target="#exampleModalCenter1" (click)="rateAttentionID(shift.id)"></td>
                               <td>{{shift.state}}</td>
                         </tr>
-                        <tr *ngIf="shift !== null && key === 'specialist'">
+                        <tr *ngIf="shift !== null && key === 'specialist' && shift.state !== 'cancel'">
                               <td>{{shift.patientName}}</td>
                               <td>{{shift.speciality}}</td>
                               <td>{{shift.specialist}}</td>
@@ -101,12 +102,36 @@
         </button>
       </div>
       <div class="modal-body">
-            <textarea name="" id="" cols="30" rows="10">
+            <textarea #texarea name="" id="" cols="30" rows="10">
                   
             </textarea>
       </div>
       <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="getReview()">OK</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">how was your care at the clinic?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <textarea #att name="" id="" cols="30" rows="10">
+                  
+            </textarea>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="rateAttention()">OK</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

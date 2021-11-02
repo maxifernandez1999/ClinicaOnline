@@ -29,7 +29,7 @@ export class ShiftsComponent implements OnInit, OnDestroy {
       this.getSpeciality();
     },1500);
     }else{
-      this.router.navigate(['']);
+      this.router.navigate(['register']);
     }
     
   }
@@ -48,7 +48,8 @@ export class ShiftsComponent implements OnInit, OnDestroy {
                                     r.data().date,
                                     r.data().time,
                                     r.data().state,
-                                    r.data().commentary);
+                                    r.data().commentary,
+                                    r.data().attention);
         console.log(shift);
         this.shifts.push(shift);
       });
@@ -57,6 +58,11 @@ export class ShiftsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy():void{
     // this.subscription.unsubscribe();
+  }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['register']);
   }
   resetFilters(){
     window.location.reload();

@@ -46,7 +46,10 @@ export class RequestShiftsComponent implements OnInit {
   get patientNameControl():any{
     return this.formShifts.get('patientName').value;
   }
-  
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['register']);
+  }
 
   public get Form():any{
     return this.formShifts.controls;
@@ -121,7 +124,7 @@ export class RequestShiftsComponent implements OnInit {
     return this.ShiftAvailable.split(' ');
   }
   addShift(){
-    
+    console.log(this.selected)
     if(this.isAdmin){
       if(this.selected){
         this.shiftsService.addShift({
@@ -129,7 +132,9 @@ export class RequestShiftsComponent implements OnInit {
           specialist: this.specialist,
           speciality: this.speciality,
           date: this.getDateAndTime()[0],
-          time: this.getDateAndTime()[1]
+          time: this.getDateAndTime()[1],
+          state: '',
+          commentary: ''
         }).then(res => {
           console.log(res);
           window.location.reload();
@@ -147,7 +152,9 @@ export class RequestShiftsComponent implements OnInit {
         specialist: this.specialist,
         speciality: this.speciality,
         date: this.getDateAndTime()[0],
-        time: this.getDateAndTime()[1]
+        time: this.getDateAndTime()[1],
+        state: '',
+        commentary: ''
       }).then(res => {
         console.log(res);
         window.location.reload();

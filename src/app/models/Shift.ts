@@ -7,6 +7,7 @@ export class Shift {
       public time:number;
       public state:string;
       public commentary:string;
+      public attention:string;
 
       constructor(id:string,
                   patientName:string,
@@ -15,7 +16,8 @@ export class Shift {
                   date:string,
                   time:number,
                   state:string,
-                  commentary:string) {
+                  commentary:string,
+                  attention:string) {
             this.patientName = patientName;
             this.specialist = specialist;
             this.speciality = speciality;
@@ -24,5 +26,6 @@ export class Shift {
             this.id = id;
             this.state = state;
             this.commentary = commentary;
+            this.attention = attention;
       }
 }

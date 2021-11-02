@@ -1,11 +1,15 @@
+<button type="button" class="btn btn-danger m-3" (click)="
+logout()">Logout</button>
 <div class="container table-center mt-3">
       <div class="container table-right ">
           <h2>Shifts</h2>
             <div [formGroup]="formShifts" class="form-group">
                 <div class="form-group">
                     <select  formControlName="patientName"      
-                            class="form-control">
-                      <option *ngFor="let name of patientsName" (click)="isSelected()" [ngValue]="name">{{name}}</option>
+                            class="form-control"
+                            (click)="isSelected()"
+                            *ngIf="isAdmin">
+                      <option *ngFor="let name of patientsName"  [ngValue]="name" selected>{{name}}</option>
                   </select>
                 </div>
                 <div #specialist class="form-group">
