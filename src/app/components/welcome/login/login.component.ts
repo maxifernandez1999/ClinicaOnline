@@ -60,43 +60,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  accessSpecialist(name:string):void{
-    switch (name) {
-      case 'Juan Carlos':
-        this.Email = 'juanCarlos@gmail.com';
-        this.Password = '123456';
-        this.setRegister();
-        break;
-      default:
-        break;
-    }
-    
-  }
 
-  accessPatient(name:string):void{
-    switch (name) {
-      case 'Maxi':
-        this.Email = 'maxi@gmail.com';
-        this.Password = '123456';
-        this.setRegister();
-        break;
-      default:
-        break;
-    }
-    
-  }
-  accessAdmin(name:string):void{
-    switch (name) {
-      case 'Diego':
-        this.Email = 'diego@gmail.com';
-        this.Password = 'marado';
-        this.setRegister();
-        break;
-      default:
-        break;
-    }
-    
-  }
+  
 
   setRegister(){
     if (this.isRegister() === "access" || this.isRegister() === "register") {

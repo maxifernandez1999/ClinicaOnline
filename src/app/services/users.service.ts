@@ -15,6 +15,8 @@ export class UsersService {
 
   private communicatorLoginPatient = new BehaviorSubject<any>('');
   public communicatorLoginPatient$ = this.communicatorLoginPatient.asObservable();
+
+
   constructor(private readonly firestore: AngularFirestore,
               private readonly storage:AngularFireStorage,
               private readonly authFire: AngularFireAuth) { 

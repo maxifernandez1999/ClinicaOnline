@@ -10,31 +10,31 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('linkPatients') linkPatients:ElementRef;
-  @ViewChild('linkSpecialists') linkSpecialists:ElementRef;
-  @ViewChild('formSpecialists') formSpecialists:ElementRef;
-  @ViewChild('formPatients') formPatients:ElementRef;
-  @ViewChild('modal') modalRegister:ElementRef;
-  form : FormGroup;
-  filesPatient:any[] = [];
-  filesSpecialist:any[] = [];
-  id:string;
-  filePath:string;
-  filePathReference:any;
-  siteKey:string;
-  constructor(private renderer:Renderer2,
-              private fb: FormBuilder,
-              private userService:UsersService,
-              private router:Router ) {
-                this.siteKey = "6LcMtAcdAAAAAAgU0GIxs-ft9CwDIWApsINlvemG"
-              }
+  @ViewChild('linkPatients') linkPatients: ElementRef;
+  @ViewChild('linkSpecialists') linkSpecialists: ElementRef;
+  @ViewChild('formSpecialists') formSpecialists: ElementRef;
+  @ViewChild('formPatients') formPatients: ElementRef;
+  @ViewChild('modal') modalRegister: ElementRef;
+  form: FormGroup;
+  filesPatient: any[] = [];
+  filesSpecialist: any[] = [];
+  id: string;
+  filePath: string;
+  filePathReference: any;
+  siteKey: string;
+  constructor(private renderer: Renderer2,
+    private fb: FormBuilder,
+    private userService: UsersService,
+    private router: Router) {
+    this.siteKey = "6LcMtAcdAAAAAAgU0GIxs-ft9CwDIWApsINlvemG"
+  }
 
   ngOnInit(): void {
     this.initForm();
-    
+
   }
 
-  initForm():void{
+  initForm(): void {
     this.form = this.fb.group({
       firstNamePatient: [
         '',
@@ -100,209 +100,234 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           Validators.maxLength(20)
         ]
       ],
-      ageSpecialist: ['',[Validators.required,
-                          Validators.max(99)]],
-      dniSpecialist: ['',[Validators.required,
-                          Validators.min(10000000),
-                          Validators.max(99000000)]],
-      emailSpecialist: ['',[Validators.required,
-                            Validators.email]],
-      passwordSpecialist: ['',[Validators.required,
-                               Validators.maxLength(20)]],
-      speciality:['',Validators.required],
+      ageSpecialist: ['', [Validators.required,
+      Validators.max(99)]],
+      dniSpecialist: ['', [Validators.required,
+      Validators.min(10000000),
+      Validators.max(99000000)]],
+      emailSpecialist: ['', [Validators.required,
+      Validators.email]],
+      passwordSpecialist: ['', [Validators.required,
+      Validators.maxLength(20)]],
+      speciality: ['', Validators.required],
       recaptcha: ['', Validators.required]
 
     });
   }
 
   ///patients
-  get agePatientControl():AbstractControl{
+  get agePatientControl(): AbstractControl {
     return this.form.get('agePatient').value;
   }
-  get firstNamePatientControl():AbstractControl{
+  get firstNamePatientControl(): AbstractControl {
     return this.form.get('firstNamePatient').value;
   }
-  get lastNamePatientControl():AbstractControl{
+  get lastNamePatientControl(): AbstractControl {
     return this.form.get('lastNamePatient').value;
   }
-  get emailPatientControl():AbstractControl{
+  get emailPatientControl(): AbstractControl {
     return this.form.get('emailPatient').value;
   }
-  get dniPatientControl():AbstractControl{
+  get dniPatientControl(): AbstractControl {
     return this.form.get('dniPatient').value;
   }
-  get passwordPatientControl():AbstractControl{
+  get passwordPatientControl(): AbstractControl {
     return this.form.get('passwordPatient').value;
   }
-  get socialWorkPatientControl():AbstractControl{
+  get socialWorkPatientControl(): AbstractControl {
     return this.form.get('socialWork').value;
   }
   ///specialists
 
-  get ageSpecialistControl():AbstractControl{
+  get ageSpecialistControl(): AbstractControl {
     return this.form.get('ageSpecialist').value;
   }
-  get firstNameSpecialistControl():AbstractControl{
+  get firstNameSpecialistControl(): AbstractControl {
     return this.form.get('firstNameSpecialist').value;
   }
-  get lastNameSpecialistControl():AbstractControl{
+  get lastNameSpecialistControl(): AbstractControl {
     return this.form.get('lastNameSpecialist').value;
   }
-  get emailSpecialistControl():AbstractControl{
+  get emailSpecialistControl(): AbstractControl {
     return this.form.get('emailSpecialist').value;
   }
-  get dniSpecialistControl():AbstractControl{
+  get dniSpecialistControl(): AbstractControl {
     return this.form.get('dniSpecialist').value;
   }
-  get passwordSpecialistControl():AbstractControl{
+  get passwordSpecialistControl(): AbstractControl {
     return this.form.get('passwordSpecialist').value;
   }
-  get specialityControl():AbstractControl{
+  get specialityControl(): AbstractControl {
     return this.form.get('speciality').value;
   }
 
 
 
-  public get Form():any{
+  public get Form(): any {
     return this.form.controls;
   }
 
-  get LinkPatients():any{
+  get LinkPatients(): any {
     return this.linkPatients.nativeElement;
   }
 
-  get LinkSpecialists():any{
+  get LinkSpecialists(): any {
     return this.linkSpecialists.nativeElement;
   }
 
-  get FormPatients():any{
+  get FormPatients(): any {
     return this.formPatients.nativeElement;
   }
 
-  get FormSpecialists():any{
+  get FormSpecialists(): any {
     return this.formSpecialists.nativeElement;
   }
 
-  ngAfterViewInit():void{
+  ngAfterViewInit(): void {
     console.log(this.LinkPatients);
   }
 
-  getFilePatient(e:any):any{
+  getFilePatient(e: any): any {
     for (const file of e.target.files) {
       this.filesPatient.push(file);
     }
-    
+
     console.log(this.filesPatient);
   }
 
-  getFileSpecialist(e:any):any{
+  getFileSpecialist(e: any): any {
     for (const file of e.target.files) {
       this.filesSpecialist.push(file);
     }
-    
+
     console.log(this.filesSpecialist);
   }
 
-  UploadFilePatients(){
+  UploadFilePatients() {
     for (const file of this.filesPatient) {
       this.filePathReference = `patients/${this.emailPatientControl}_${this.firstNamePatientControl}.png`;
-      this.userService.uploadFile(file,"patients",this.emailPatientControl,this.firstNamePatientControl).then(res => {
+      this.userService.uploadFile(file, "patients", this.emailPatientControl, this.firstNamePatientControl).then(res => {
         this.userService.downloadFile(this.filePathReference).subscribe(res => {
           console.log(res);
           this.filePath = res;
           this.addPatient();
         });
       })
-      
-      
+
+
     }
-    
+
   }
 
-  
+ 
+  rapidAccess(user: string): void {
+    switch (user) {
+      case 'user1':
+    
+        break;
+      case 'user2':
+        break;
+      case 'user3':
 
-  UploadFileSpecialist():void{
+        break;
+      case 'user4':
+
+        break;
+      case 'user5':
+
+        break;
+      case 'user6':
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+  UploadFileSpecialist(): void {
     for (const file of this.filesSpecialist) {
       this.filePathReference = `specialists/${this.emailSpecialistControl}_${this.firstNameSpecialistControl}.png`;
-      this.userService.uploadFile(file,"specialists",this.emailSpecialistControl,this.firstNameSpecialistControl).then(res => {
+      this.userService.uploadFile(file, "specialists", this.emailSpecialistControl, this.firstNameSpecialistControl).then(res => {
         this.userService.downloadFile(this.filePathReference).subscribe(res => {
           console.log(res);
           this.filePath = res;
           this.addSpecialist();
         });
       })
-      
-      
+
+
     }
-    
+
   }
 
-  getIDPatient():void{
+  getIDPatient(): void {
     this.userService.Patients.subscribe(res => {
       res.forEach(r => {
-        if (r.data().email === this.emailPatientControl && 
-            r.data().password === this.passwordPatientControl) {
-            this.id = r.id;
+        if (r.data().email === this.emailPatientControl &&
+          r.data().password === this.passwordPatientControl) {
+          this.id = r.id;
         }
       });
     });
 
   }
-  getIDSpecialist():void{
+  getIDSpecialist(): void {
     this.userService.Specialists.subscribe(res => {
       res.forEach(r => {
-        if (r.data().email === this.emailSpecialistControl && 
-            r.data().password === this.passwordSpecialistControl) {
-            this.id = r.id;
+        if (r.data().email === this.emailSpecialistControl &&
+          r.data().password === this.passwordSpecialistControl) {
+          this.id = r.id;
         }
       });
     });
 
   }
 
-  showModal():void{
+  showModal(): void {
     const el = this.modalRegister.nativeElement;
-    this.renderer.addClass(el,'show');
+    this.renderer.addClass(el, 'show');
   }
-  addPatient(){
-      this.userService.addPatient({
-        firstName: this.firstNamePatientControl,
-        lastName: this.lastNamePatientControl,
-        age: this.agePatientControl,
-        dni: this.dniPatientControl,
-        email: this.emailPatientControl,
-        password: this.passwordPatientControl,
-        socialWork: this.socialWorkPatientControl,
-        photo: this.filePath
-  
-      }).then(res => {
-        console.log(res);
-      }).catch(err => {
-        console.log(err);    
-      });
-      
-      setTimeout(()=>{
-        this.showModal();
-      },1000);
-      let obj = {
-        firstName: this.firstNamePatientControl,
-        lastName: this.lastNamePatientControl,
-        age: this.agePatientControl,
-        dni: this.dniPatientControl,
-        email: this.emailPatientControl,
-        password: this.passwordPatientControl,
-        socialWork: this.socialWorkPatientControl,
-        photo: this.filePath
-      }
-      localStorage.setItem("patient", JSON.stringify(obj));
-      this.router.navigate(['myShifts']);
+  addPatient() {
+    this.userService.addPatient({
+      firstName: this.firstNamePatientControl,
+      lastName: this.lastNamePatientControl,
+      age: this.agePatientControl,
+      dni: this.dniPatientControl,
+      email: this.emailPatientControl,
+      password: this.passwordPatientControl,
+      socialWork: this.socialWorkPatientControl,
+      photo: this.filePath
 
-    
+    }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    setTimeout(() => {
+      this.showModal();
+    }, 1000);
+    let obj = {
+      firstName: this.firstNamePatientControl,
+      lastName: this.lastNamePatientControl,
+      age: this.agePatientControl,
+      dni: this.dniPatientControl,
+      email: this.emailPatientControl,
+      password: this.passwordPatientControl,
+      socialWork: this.socialWorkPatientControl,
+      photo: this.filePath
+    }
+    localStorage.setItem("patient", JSON.stringify(obj));
+    this.router.navigate(['myShifts']);
+
+
   }
 
-  addSpecialist(){
+  addSpecialist() {
 
-      this.userService.addSpecialist({
+    this.userService.addSpecialist({
       firstName: this.firstNameSpecialistControl,
       lastName: this.lastNameSpecialistControl,
       age: this.ageSpecialistControl,
@@ -315,13 +340,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }).then(res => {
       console.log(res);
     }).catch(err => {
-      console.log(err);    
+      console.log(err);
     })
-  
-   
-    setTimeout(()=>{
+
+
+    setTimeout(() => {
       this.showModal();
-    },1000);
+    }, 1000);
     let obj = {
       firstName: this.firstNameSpecialistControl,
       lastName: this.lastNameSpecialistControl,
@@ -337,21 +362,21 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.router.navigate(['myShifts']);
 
 
-    
+
   }
 
-  changeFormPatients():void{
-    this.renderer.addClass(this.LinkPatients,"active");
-    this.renderer.removeClass(this.LinkSpecialists,"active");
-    this.renderer.addClass(this.FormPatients,"active");
-    this.renderer.removeClass(this.FormSpecialists,"active");
+  changeFormPatients(): void {
+    this.renderer.addClass(this.LinkPatients, "active");
+    this.renderer.removeClass(this.LinkSpecialists, "active");
+    this.renderer.addClass(this.FormPatients, "active");
+    this.renderer.removeClass(this.FormSpecialists, "active");
   }
 
-  changeFormSpecialists():void{
-    this.renderer.addClass(this.LinkSpecialists,"active");
-    this.renderer.removeClass(this.LinkPatients,"active");
-    this.renderer.addClass(this.FormSpecialists,"active");
-    this.renderer.removeClass(this.FormPatients,"active");
+  changeFormSpecialists(): void {
+    this.renderer.addClass(this.LinkSpecialists, "active");
+    this.renderer.removeClass(this.LinkPatients, "active");
+    this.renderer.addClass(this.FormSpecialists, "active");
+    this.renderer.removeClass(this.FormPatients, "active");
   }
 
 }
