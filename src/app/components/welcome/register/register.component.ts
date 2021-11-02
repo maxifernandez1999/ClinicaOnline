@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Administrator } from 'src/app/models/Administrator';
+import { Patient } from 'src/app/models/Patient';
+import { Specialist } from 'src/app/models/Specialist';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -15,6 +18,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChild('formSpecialists') formSpecialists: ElementRef;
   @ViewChild('formPatients') formPatients: ElementRef;
   @ViewChild('modal') modalRegister: ElementRef;
+  specialists:Specialist[] = [];
+  patients:Patient[] = [];
+  administrators:Administrator[] = [];
   form: FormGroup;
   filesPatient: any[] = [];
   filesSpecialist: any[] = [];
@@ -22,6 +28,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   filePath: string;
   filePathReference: any;
   siteKey: string;
+  currentUser:any = "";
+  isPatient:boolean = false;
+  isSpecialist:boolean = false;
+  isAdministrator:boolean = false;
+
+  email:string;
+  password:string;
   constructor(private renderer: Renderer2,
     private fb: FormBuilder,
     private userService: UsersService,
@@ -31,9 +44,27 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getAdministrators();
+    this.getSpecialists();
+    this.getPatients();
 
   }
 
+  get Email():any{
+    return this.email;
+  }
+
+  get Password():any{
+    return this.password;
+  }
+
+  set Email(email:string){
+    this.email = email;
+  }
+
+  set Password(password:string){
+    this.password = password;
+  }
   initForm(): void {
     this.form = this.fb.group({
       firstNamePatient: [
@@ -223,20 +254,37 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   rapidAccess(user: string): void {
     switch (user) {
       case 'user1':
-    
+        this.Email = "miriam@gmail.com";
+        this.Password = '123456';
+        this.login();
         break;
       case 'user2':
+        this.Email = "pablo@gmail.com";
+        this.Password = '123456';
+        this.login();
         break;
       case 'user3':
+        this.Email = "maxi@gmail.com";
+        this.Password = '123456';
+        this.login();
 
         break;
       case 'user4':
+        this.Email = "lionel@gmail.com";
+        this.Password = '123456';
+        this.login();
 
         break;
       case 'user5':
+        this.Email = "pepe@gmail.com";
+        this.Password = '123456';
+        this.login();
 
         break;
       case 'user6':
+        this.Email = "marado@gmail.com";
+        this.Password = 'marado';
+        this.login();
 
         break;
 
@@ -377,6 +425,137 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.renderer.removeClass(this.LinkPatients, "active");
     this.renderer.addClass(this.FormSpecialists, "active");
     this.renderer.removeClass(this.FormPatients, "active");
+  }
+
+
+
+  //////
+  getPatients():void{
+    this.userService.Patients.subscribe(res => {
+      res.forEach(r => {
+        let patient:Patient = new Patient(r.id,
+                                          r.data().firstName,
+                                          r.data().lastName,
+                                          r.data().age,
+                                          r.data().dni,
+                                          r.data().email,
+                                          r.data().password,
+                                          r.data().socialWork,
+                                          r.data().photo);
+
+        this.patients.push(patient);
+      });
+
+    });
+    console.log(this.patients)
+  }
+
+  getSpecialists():void{
+    this.userService.Specialists.subscribe(res => {
+      res.forEach(r => {
+        let specialist:Specialist = new Specialist( r.id,
+                                                    r.data().firstName,
+                                                    r.data().lastName,
+                                                    r.data().age,
+                                                    r.data().dni,
+                                                    r.data().email,
+                                                    r.data().password,
+                                                    r.data().speciality,
+                                                    r.data().access,
+                                                    r.data().disponibility,
+                                                    r.data().photo);
+
+        this.specialists.push(specialist);
+      });
+    });
+  }
+
+  getAdministrators():void{
+    this.userService.Administrators.subscribe(res => {
+      res.forEach(r => {
+        let administrator:Administrator = new Administrator(r.id,
+                                                            r.data().firstName,
+                                                            r.data().lastName,
+                                                            r.data().age,
+                                                            r.data().dni,
+                                                            r.data().email,
+                                                            r.data().password,
+                                                            r.data().photo);
+
+        this.administrators.push(administrator);
+      });
+    });
+  }
+
+  isRegister():string{
+    for (const pat of this.patients) {
+      if (this.userValid(pat)) {
+        this.isPatient = true;
+        this.currentUser = pat;
+        console.log(typeof pat)
+        return "register";
+        
+      }
+    }
+    console.log(this.specialists)
+    for (const spe of this.specialists) {
+      
+      if (this.userValid(spe)) {
+        if (this.accessValid(spe)) {
+          this.isSpecialist = true;
+          this.currentUser = spe;
+          return "access";
+          
+        }else{
+          return "no-access";
+        }
+      }
+      
+    }
+    for (const adm of this.administrators) {
+      if (this.userValid(adm)) {
+        this.isAdministrator = true;
+        this.currentUser = adm;
+        return "register";
+      }
+    }
+    return "error";
+  }
+
+  userValid(user:any):boolean{
+    if (user.email === this.Email && user.password === this.Password) {
+      return true;
+    }
+    return false;
+  }
+
+  accessValid(spe:Specialist):boolean{
+    return spe.access;
+  }
+
+  sendDataLoginPatient(data:Patient):void{
+    this.userService.dataLoginPatient(data);
+  }
+
+  login():void{
+    console.log(this.isRegister())
+    if (this.isRegister() === "access" || this.isRegister() === "register") {
+      if (this.isPatient) {
+        localStorage.setItem("patient", JSON.stringify(this.currentUser));
+        this.router.navigate(['myShifts']);
+      }else if(this.isSpecialist){
+        localStorage.setItem("specialist", JSON.stringify(this.currentUser));
+        this.router.navigate(['myShifts']);
+      }else if(this.isAdministrator){
+        localStorage.setItem("administrator", JSON.stringify(this.currentUser));
+        this.router.navigate(['admin']);
+      }
+      
+    }else if(this.isRegister() === "no-access"){
+      alert('The specialist does not have access');
+    }else{
+      alert('no registed');
+    }
   }
 
 }

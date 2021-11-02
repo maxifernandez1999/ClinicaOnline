@@ -198,14 +198,6 @@ export class LoginComponent implements OnInit {
   }
 
   login():void{
-    this.userService.register(
-      this.Email,
-      this.Password
-    ).then(response => {
-      console.log(response);
-    }).catch(error => {
-      console.log(error);
-    })
     console.log(this.isRegister())
     if (this.isRegister() === "access" || this.isRegister() === "register") {
       if (this.isPatient) {
