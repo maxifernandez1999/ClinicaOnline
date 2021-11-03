@@ -51,4 +51,10 @@ export class ShiftsService {
   UpdateShiftAttention(id:string,attention:string):Promise<any>{
     return this.firestore.collection("shifts").doc(id).update({attention: attention});
   }
+  UpdateShiftdiagnosis(id:string,diagnosis:string):Promise<any>{
+    return this.firestore.collection("shifts").doc(id).update({diagnosis: diagnosis});
+  }
+  UpdateShiftPatientName(id:string,patientName:string):Promise<any>{
+    return this.firestore.collection("shifts").doc(id).update({patientName: patientName});
+  }
 }

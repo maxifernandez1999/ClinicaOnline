@@ -49,7 +49,8 @@ export class ShiftsComponent implements OnInit, OnDestroy {
                                     r.data().time,
                                     r.data().state,
                                     r.data().commentary,
-                                    r.data().attention);
+                                    r.data().attention,
+                                    r.data().diagnosis);
         console.log(shift);
         this.shifts.push(shift);
       });

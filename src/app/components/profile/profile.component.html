@@ -1,5 +1,7 @@
-<button type="button" class="btn btn-danger m-3" (click)="
+<button *ngIf="key === 'patient'" type="button" class="btn btn-danger m-3" (click)="
 logout()">Logout</button>
+<button type="button" class="btn btn-success m-3" (click)="
+goClinicHistory()">Clinic History</button>
 <div class="container table-center">
       <div>
             <input *ngIf="key === 'specialist'" #de class="form-control m-3" type="number" name="" id="" placeholder="De">

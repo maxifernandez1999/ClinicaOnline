@@ -135,6 +135,9 @@ export class ProfileComponent implements OnInit {
     }
     
   }
+  goClinicHistory(){
+    this.router.navigate(['history']);
+  }
   isRegister(email:string, password:string):boolean{
     if(email == this.localStorageData.email && password == this.localStorageData.password){
       return true;

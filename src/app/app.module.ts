@@ -17,6 +17,8 @@ import { ShiftsComponent } from './components/shifts/shifts.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { ClinicHistoryComponent } from './components/clinic-history/clinic-history.component';
+import { RequestClinicHistoryComponent } from './components/request-clinic-history/request-clinic-history.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     RequestShiftsComponent,
     ShiftsComponent,
     MyShiftsComponent,
-    ProfileComponent
+    ProfileComponent,
+    ClinicHistoryComponent,
+    RequestClinicHistoryComponent
   ],
   imports: [
     BrowserModule,

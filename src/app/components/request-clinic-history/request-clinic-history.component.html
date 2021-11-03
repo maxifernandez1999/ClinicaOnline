@@ -1,0 +1,84 @@
+<div class="container table-center">
+    <div [formGroup]="form" class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Height" value=""
+                    formControlName="height"
+                    [ngClass]="{'is-invalid': Form.height.touched && Form.height.errors}"
+                    required />
+                <div *ngIf="Form.height.touched && Form.height.errors" class="invalid-feedback">
+                    <div *ngIf="Form.height.errors.required">
+                        Is required
+                    </div>
+                    <div *ngIf="Form.height.errors.min">
+                        10 min
+                    </div>
+                    <div *ngIf="Form.height.errors.max">
+                        300 max
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Weight" value=""
+                    formControlName="weight"
+                    [ngClass]="{'is-invalid': Form.weight.touched && Form.weight.errors}" required />
+                <div *ngIf="Form.weight.touched && Form.weight.errors" class="invalid-feedback">
+                    <div *ngIf="Form.weight.errors.required">
+                        Is required
+                    </div>
+                    <div *ngIf="Form.weight.errors.min">
+                        10 min
+                    </div>
+                    <div *ngIf="Form.weight.errors.max">
+                        700 max
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Temperature" value="" formControlName="temperature"
+                    [ngClass]="{'is-invalid': Form.temperature.touched && Form.temperature.errors}" required />
+                <div *ngIf="Form.temperature.touched && Form.temperature.errors" class="invalid-feedback">
+                    <div *ngIf="Form.temperature.errors.required">
+                        Is required
+                    </div>
+                    <div *ngIf="Form.temperature.errors.min">
+                        24 min
+                    </div>
+                    <div *ngIf="Form.temperature.errors.max">
+                        50 max
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Pressure" value="" formControlName="pressure"
+                    [ngClass]="{'is-invalid': Form.pressure.touched && Form.pressure.errors}" required />
+                <div *ngIf="Form.pressure.touched && Form.pressure.errors" class="invalid-feedback">
+                    <div *ngIf="Form.pressure.errors.required">
+                        Is required
+                    </div>
+                    <div *ngIf="Form.pressure.errors.min">
+                        1 min
+                    </div>
+                    <div *ngIf="Form.pressure.errors.max">
+                        25 max
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Blood Type" value=""
+                    formControlName="blood"
+                    [ngClass]="{'is-invalid': Form.blood.touched && Form.blood.errors}" required />
+                <div *ngIf="Form.blood.touched && Form.blood.errors" class="invalid-feedback">
+                    <div *ngIf="Form.blood.errors.required">
+                        Is required
+                    </div>
+                </div>
+            </div>
+
+            <input type="button" class="btnRegister" (click)="addHistory()" value="Submit" />
+
+        </div>
+    </div>
+</div>
