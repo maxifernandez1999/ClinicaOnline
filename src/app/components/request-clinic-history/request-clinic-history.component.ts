@@ -91,7 +91,8 @@ export class RequestClinicHistoryComponent implements OnInit {
         temperature: this.Temperature,
         pressure: this.Pressure,
         bloodType: this.BloodType,
-        patientName: this.patientName
+        patientName: this.patientName,
+        specialistName: this.localStorageData.firstName + ' ' + this.localStorageData.lastName
       })
       .then((res) => {
         console.log(res);

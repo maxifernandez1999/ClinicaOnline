@@ -19,6 +19,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ClinicHistoryComponent } from './components/clinic-history/clinic-history.component';
 import { RequestClinicHistoryComponent } from './components/request-clinic-history/request-clinic-history.component';
+import { PatientsComponent } from './components/patients/patients.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RequestClinicHistoryComponent } from './components/request-clinic-histo
     MyShiftsComponent,
     ProfileComponent,
     ClinicHistoryComponent,
-    RequestClinicHistoryComponent
+    RequestClinicHistoryComponent,
+    PatientsComponent
   ],
   imports: [
     BrowserModule,

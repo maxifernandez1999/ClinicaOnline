@@ -4,11 +4,11 @@ import { ClinicHistory } from 'src/app/models/ClinicHistory';
 import { HistoriesService } from 'src/app/services/histories.service';
 
 @Component({
-  selector: 'app-clinic-history',
-  templateUrl: './clinic-history.component.html',
-  styleUrls: ['./clinic-history.component.scss']
+  selector: 'app-patients',
+  templateUrl: './patients.component.html',
+  styleUrls: ['./patients.component.scss']
 })
-export class ClinicHistoryComponent implements OnInit {
+export class PatientsComponent implements OnInit {
 
   subscription:Subscription;
   histories:ClinicHistory[] = [];
@@ -70,10 +70,10 @@ export class ClinicHistoryComponent implements OnInit {
       console.log(this.historiesFilter)
     } else if (this.key === 'specialist') {
       this.histories = this.histories.map<ClinicHistory>((history) => {
-        // if (history.specialist == this.localStorageData.firstName + ' ' + this.localStorageData.lastName) {
-        //   this.historiesFilter.push(history);
-        //   return history;
-        // }
+        if (history.specialistName == this.localStorageData.firstName + ' ' + this.localStorageData.lastName) {
+          this.historiesFilter.push(history);
+          return history;
+        }
         return history;
       });
     }

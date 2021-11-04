@@ -64,7 +64,9 @@ export class AdministratorComponent implements OnInit {
     });
     console.log(this.patients)
   }
-
+  ClinicHistories(){
+    this.router.navigate(['history']);
+  }
   getSpecialists():void{
     this.userService.Specialists.subscribe(res => {
       res.forEach(r => {

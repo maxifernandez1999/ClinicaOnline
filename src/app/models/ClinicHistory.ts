@@ -4,17 +4,27 @@ export class ClinicHistory {
       public temperature:number;
       public pressure:number;
       public bloodType:string;
+      public patientName:string;
+      public id:string;
+      public specialistName:string;
 
-      constructor(height:number,
+      constructor(id:string,
+                  height:number,
                   weight:number,
                   temperature:number,
                   pressure:number,
-                  bloodType:string) {
+                  bloodType:string,
+                  patientName:string,
+                  specialistName:string
+                  ) {
+      this.id = id;
+      this.patientName = patientName;
       this.height = height;
       this.weight = weight;
       this.temperature = temperature;
       this.pressure = pressure;
       this.bloodType = bloodType;
+      this.specialistName = specialistName;
             
       }
 }

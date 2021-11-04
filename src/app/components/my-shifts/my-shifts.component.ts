@@ -56,6 +56,9 @@ export class MyShiftsComponent implements OnInit {
     }, 2000);
   }
 
+  patientsFunction():void{
+    this.router.navigate(['patients'])
+  }
   getLocalStorageData(): void {
     if (localStorage.hasOwnProperty('patient')) {
       this.key = 'patient';

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
 import { ClinicHistoryComponent } from './components/clinic-history/clinic-history.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
+import { PatientsComponent } from './components/patients/patients.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RequestClinicHistoryComponent } from './components/request-clinic-history/request-clinic-history.component';
 import { RequestShiftsComponent } from './components/request-shifts/request-shifts.component';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path:'history',
     component: ClinicHistoryComponent
+  },
+  {
+    path:'patients',
+    component: PatientsComponent
   },
   {
     path:'request-history',

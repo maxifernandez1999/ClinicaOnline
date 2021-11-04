@@ -1,5 +1,6 @@
 <button type="button" class="btn btn-danger m-3" (click)="logout()">Logout</button>
-<input *ngIf="key === 'patient'" type="button" class="btn btn-success m-3" (click)="goRequestShifts()" value="Load Shifts">
+<input *ngIf="key === 'patient'" type="button" class="btn btn-success m-3" (click)="patientsFunction()" value="Patients">
+<input *ngIf="key === 'patient'" type="button" class="btn btn-info m-3" (click)="goRequestShifts()" value="Load Shifts">
 <input *ngIf="key === 'specialist' || key === 'patient'" type="button" class="btn btn-warning m-3" (click)="profile()" value="Profile">
 <div class="container-fluid table-center">
       <h2>Welcome {{name}}</h2>
@@ -77,9 +78,9 @@
                                     Cancel
                                   </button></td>
                               <td><input *ngIf="shift.commentary !== null && key === 'specialist'" type="button" class="btn btn-info" value="See Review" (click)="seeReview(shift.id)"></td>
-                              <td><input *ngIf="key === 'specialist'" type="button" class="btn btn-info" value="Refuse Turn" (click)="refuseTurn(shift.id)"></td>
-                              <td><input *ngIf="key === 'specialist'" type="button" class="btn btn-info" value="Accept Turn" (click)="acceptTurn(shift.id)"></td>
-                              <td><input *ngIf="key === 'specialist'" type="button" class="btn btn-info" value="End shift" (click)="finishTurnID(shift.id, shift.patientName)" data-toggle="modal" data-target="#exampleModalCenter2"></td>
+                              <td><input *ngIf="key === 'specialist' && shift.state !== 'realized'" type="button" class="btn btn-info" value="Refuse Turn" (click)="refuseTurn(shift.id)"></td>
+                              <td><input *ngIf="key === 'specialist' && shift.state !== 'realized'" type="button" class="btn btn-info" value="Accept Turn" (click)="acceptTurn(shift.id)"></td>
+                              <td><input *ngIf="key === 'specialist' && shift.state !== 'realized'" type="button" class="btn btn-info" value="End shift" (click)="finishTurnID(shift.id, shift.patientName)" data-toggle="modal" data-target="#exampleModalCenter2"></td>
                               
                               <td>{{shift.state}}</td>
                         </tr>
