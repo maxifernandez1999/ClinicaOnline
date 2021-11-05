@@ -1,7 +1,8 @@
+<app-pdf [elementoClinicHistory]="elementToRendererInPdf" *ngIf="key === 'patient'"></app-pdf>
 <div class="container table-center">
       
       <div class="container table-right">
-            <table class="table table-hover">
+            <table #html class="table table-hover">
                   <thead >                      
                         <h2 class="text-center">Histories</h2>
                         <tr>   
@@ -13,7 +14,7 @@
                               <th scope="col">Blood Type</th>
                         </tr>
                   </thead>
-                  <tbody *ngIf="key !== 'administrator'">
+                  <tbody *ngIf="key !== 'patient'">
                         <tr *ngFor="let history of historiesFilter">
                               <td>{{history.patientName}}</td>
                               <td>{{history.weight}}</td>

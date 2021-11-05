@@ -20,6 +20,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ClinicHistoryComponent } from './components/clinic-history/clinic-history.component';
 import { RequestClinicHistoryComponent } from './components/request-clinic-history/request-clinic-history.component';
 import { PatientsComponent } from './components/patients/patients.component';
+import { PdfComponent } from './components/pdf/pdf.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PatientsComponent } from './components/patients/patients.component';
     ProfileComponent,
     ClinicHistoryComponent,
     RequestClinicHistoryComponent,
-    PatientsComponent
+    PatientsComponent,
+    PdfComponent
   ],
   imports: [
     BrowserModule,

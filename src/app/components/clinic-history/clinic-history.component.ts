@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Element } from '@angular/compiler';
+import { AfterViewInit, Component, ElementRef, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ClinicHistory } from 'src/app/models/ClinicHistory';
 import { HistoriesService } from 'src/app/services/histories.service';
@@ -8,12 +9,14 @@ import { HistoriesService } from 'src/app/services/histories.service';
   templateUrl: './clinic-history.component.html',
   styleUrls: ['./clinic-history.component.scss']
 })
-export class ClinicHistoryComponent implements OnInit {
+export class ClinicHistoryComponent implements OnInit, AfterViewInit {
 
   subscription:Subscription;
   histories:ClinicHistory[] = [];
   localStorageData:any;
   key:string;
+  elementToRendererInPdf:any = "";
+  @ViewChild('html') html: ElementRef; 
   historiesFilter:ClinicHistory[] = [];
   constructor(private historyService: HistoriesService) { }
 
@@ -24,7 +27,13 @@ export class ClinicHistoryComponent implements OnInit {
       this.filterHistories();
     }, 2000);
   }
+  ngAfterViewInit():void{
+    this.elementToRendererInPdf = this.html.nativeElement;
+  }
 
+  sendDataToPDF(){
+    
+  }
   getSHistories(): void {
     this.subscription = this.historyService.Histories.subscribe((res) => {
       res.forEach((r) => {
