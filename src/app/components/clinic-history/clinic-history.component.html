@@ -14,14 +14,14 @@
                               <th scope="col">Blood Type</th>
                         </tr>
                   </thead>
-                  <tbody *ngIf="key !== 'patient'">
-                        <tr *ngFor="let history of historiesFilter">
-                              <td>{{history.patientName}}</td>
-                              <td>{{history.weight}}</td>
-                              <td>{{history.height}}</td>
-                              <td>{{history.temperature}}</td>
-                              <td>{{history.pressure}}</td>
-                              <td>{{history.bloodType}}</td>   
+                  <tbody *ngIf="key === 'patient'">
+                        <tr *ngFor="let ht of historiesFilter">
+                              <td>{{ht.patientName}}</td>
+                              <td>{{ht.weight}}</td>
+                              <td>{{ht.height}}</td>
+                              <td>{{ht.temperature}}</td>
+                              <td>{{ht.pressure}}</td>
+                              <td>{{ht.bloodType}}</td>   
                         </tr>
                   </tbody>
                   <tbody *ngIf="key === 'administrator'">

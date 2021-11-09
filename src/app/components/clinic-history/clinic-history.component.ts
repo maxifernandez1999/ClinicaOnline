@@ -21,7 +21,7 @@ export class ClinicHistoryComponent implements OnInit, AfterViewInit {
   constructor(private historyService: HistoriesService) { }
 
   ngOnInit(): void {
-    this.getSHistories();
+    this.getHistories();
     this.getLocalStorageData();
     setTimeout(() => {
       this.filterHistories();
@@ -34,7 +34,7 @@ export class ClinicHistoryComponent implements OnInit, AfterViewInit {
   sendDataToPDF(){
     
   }
-  getSHistories(): void {
+  getHistories(): void {
     this.subscription = this.historyService.Histories.subscribe((res) => {
       res.forEach((r) => {
         let clinicHistory: ClinicHistory = new ClinicHistory(
@@ -69,8 +69,6 @@ export class ClinicHistoryComponent implements OnInit, AfterViewInit {
   filterHistories() {
     if (this.key === 'patient') {
       this.histories = this.histories.map<ClinicHistory>((history) => {
-        console.log(this.localStorageData.firstName)
-        console.log(history.patientName)
         if (history.patientName == this.localStorageData.firstName) {
           this.historiesFilter.push(history);
           return history;
@@ -78,6 +76,7 @@ export class ClinicHistoryComponent implements OnInit, AfterViewInit {
         return history;
       });
       console.log(this.historiesFilter)
+      console.log(this.histories)
     } else if (this.key === 'specialist') {
       this.histories = this.histories.map<ClinicHistory>((history) => {
         // if (history.specialist == this.localStorageData.firstName + ' ' + this.localStorageData.lastName) {
