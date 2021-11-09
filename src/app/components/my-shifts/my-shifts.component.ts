@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ClinicHistory } from 'src/app/models/ClinicHistory';
 import { Patient } from 'src/app/models/Patient';
 import { Shift } from 'src/app/models/Shift';
 import { HistoriesService } from 'src/app/services/histories.service';
@@ -23,15 +24,19 @@ export class MyShiftsComponent implements OnInit {
   patient: Patient;
   ID: string;
   key: string;
+  historiesFields: any[] = [];
   shiftsFilter: Shift[] = [];
   shifts: Shift[] = [];
+  histories: ClinicHistory[] = [];
   subscription: Subscription;
   specialists: string[] = [];
   specialities: string[] = [];
+  states: string[] = [];
+  dates: string[] = [];
   patients: string[] = [];
   review: string;
-  finishTurnEl:string;
-  patientName:string;
+  finishTurnEl: string;
+  patientName: string;
 
   localStorageData: string;
 
@@ -39,25 +44,29 @@ export class MyShiftsComponent implements OnInit {
   @ViewChild('texareaFinish') texf: ElementRef;
   @ViewChild('att') att: ElementRef;
   ngOnInit(): void {
-    this.getShifts();
     this.getLocalStorageData();
     this.getUserName();
+    this.getShifts();
+    this.getHistories();
 
     setTimeout(() => {
       this.filterShifts();
       if (this.key === 'patient') {
-        console.log(this.shiftsFilter);
         this.getSpecialists();
         this.getSpeciality();
+        this.getDates();
+        this.getStates();
       } else if (this.key === 'specialist') {
         this.getSpeciality();
         this.getPatient();
+        this.getDates();
+        this.getStates();
       }
     }, 2000);
   }
 
-  patientsFunction():void{
-    this.router.navigate(['patients'])
+  patientsFunction(): void {
+    this.router.navigate(['patients']);
   }
   getLocalStorageData(): void {
     if (localStorage.hasOwnProperty('patient')) {
@@ -84,6 +93,7 @@ export class MyShiftsComponent implements OnInit {
     let obj = JSON.parse(this.localStorageData);
     console.log(obj);
     this.name = obj.firstName;
+    console.log(this.name);
   }
 
   seeReview(commentary: string): void {}
@@ -116,14 +126,15 @@ export class MyShiftsComponent implements OnInit {
   finishTurn(): void {
     this.getFinishTurn();
     this.shiftService.UpdateShiftState(this.ID, 'realized').then(() => {
-      this.shiftService.UpdateShiftdiagnosis(this.ID, this.finishTurnEl).then(() => {
-        this.historyService.Communicator([this.ID,this.patientName])
-        this.router.navigate(['request-history'])
-      });
+      this.shiftService
+        .UpdateShiftdiagnosis(this.ID, this.finishTurnEl)
+        .then(() => {
+          this.historyService.Communicator([this.ID, this.patientName]);
+          this.router.navigate(['request-history']);
+        });
     });
-    
   }
-  finishTurnID(id: string, patientName:string): void {
+  finishTurnID(id: string, patientName: string): void {
     this.ID = id;
     this.patientName = patientName;
   }
@@ -144,6 +155,26 @@ export class MyShiftsComponent implements OnInit {
           r.data().diagnosis
         );
         this.shifts.push(shift);
+      });
+    });
+  }
+  getHistories(): void {
+    this.subscription = this.historyService.Histories.subscribe((res) => {
+      res.forEach((r) => {
+        if (r.data().patientName === this.name) {
+          let history: ClinicHistory = new ClinicHistory(
+            r.id,
+            r.data().height,
+            r.data().weight,
+            r.data().temperature,
+            r.data().pressure,
+            r.data().bloodType,
+            r.data().patientName,
+            r.data().specialistName,
+            r.data().idShift
+          );
+          this.histories.push(history);
+        }
       });
     });
   }
@@ -220,23 +251,168 @@ export class MyShiftsComponent implements OnInit {
 
     console.log(this.specialists);
   }
-
-  filterSpeciality(shiftParam: string): void {
-    this.shifts = this.shiftsFilter.filter((shift) => {
-      return shift.speciality === shiftParam;
+  //
+  getDates(): void {
+    this.dates = this.shiftsFilter.map(function (shift) {
+      return shift.date + ' ' + shift.time;
     });
+
+    this.dates = this.dates.reduce((acc, item) => {
+      if (!acc.includes(item)) {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+  }
+  filterDates(shiftParam: string): void {
+    console.log(this.shiftsFilter);
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      if (shift.date + ' ' + shift.time === shiftParam) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    console.log(this.shiftsFilter);
+  }
+  //
+  getStates(): void {
+    this.states = this.shiftsFilter.map(function (shift) {
+      return shift.state;
+    });
+
+    this.states = this.states.reduce((acc, item) => {
+      if (!acc.includes(item)) {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+  }
+
+  //
+  // getHistoriesHeight(): void {
+  //   this.historiesFields = this.histories.map(function (history) {
+  //     if(history.patientName === this.name){
+  //       return history.height;
+  //     }else{
+  //       return 0;
+  //     }
+
+  //   });
+
+  //   this.historiesFields = this.historiesFields.reduce((acc, item) => {
+  //     if (!acc.includes(item)) {
+  //       acc.push(item);
+  //     }
+  //     return acc;
+  //   }, []);
+  // }
+  filterStates(shiftParam: string): void {
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      if (shift.state === shiftParam) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    console.log(this.shiftsFilter);
+  }
+  //
+  filterHeight(shiftParam: string): void {
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      this.histories.forEach((history) => {
+        if (shift.id === history.id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    });
+  }
+  filterWeight(shiftParam: string): void {
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      this.histories.forEach((history) => {
+        if (shift.id === history.id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    });
+  }
+  filterTemperature(shiftParam: string): void {
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      this.histories.forEach((history) => {
+        console.log(shift.id);
+        console.log(history.id);
+        if (shift.id === history.id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    });
+  }
+  filterPressure(shiftParam: string): void {
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      this.histories.forEach((history) => {
+        console.log(shift.id);
+        console.log(history.id);
+        if (shift.id === history.id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    });
+  }
+  filterBloodType(shiftParam: string): void {
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      this.histories.forEach((history) => {
+        console.log(shift.id);
+        console.log(history.id);
+        if (shift.id === history.id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    });
+  }
+  //
+  filterSpeciality(shiftParam: string): void {
+    console.log(this.shiftsFilter);
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      if (shift.speciality === shiftParam) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    console.log(this.shiftsFilter);
   }
 
   filterPatient(shiftParam: string): void {
-    this.shifts = this.shiftsFilter.filter((shift) => {
-      return shift.patientName === shiftParam;
+    console.log(this.shiftsFilter);
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      if (shift.patientName === shiftParam) {
+        return true;
+      } else {
+        return false;
+      }
     });
+    console.log(this.shiftsFilter);
   }
-
   filterSpecialist(shiftParam: string): void {
-    this.shifts = this.shiftsFilter.filter((shift) => {
-      return shift.specialist === shiftParam;
+    console.log(this.shiftsFilter);
+    this.shiftsFilter = this.shiftsFilter.filter((shift) => {
+      if (shift.specialist === shiftParam) {
+        return true;
+      } else {
+        return false;
+      }
     });
+    console.log(this.shiftsFilter);
   }
 
   cancelShift(id: string): void {

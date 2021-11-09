@@ -4,7 +4,7 @@ export class Shift {
       public specialist:any;
       public speciality:string;
       public date:string;
-      public time:number;
+      public time:string;
       public state:string;
       public commentary:string;
       public attention:string;
@@ -15,7 +15,7 @@ export class Shift {
                   specialist:string,
                   speciality:string,
                   date:string,
-                  time:number,
+                  time:string,
                   state:string,
                   commentary:string,
                   attention:string,

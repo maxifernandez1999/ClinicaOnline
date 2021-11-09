@@ -36,7 +36,8 @@ export class PatientsComponent implements OnInit {
           r.data().pressure,
           r.data().bloodType,
           r.data().patientName,
-          r.data().specialistName
+          r.data().specialistName,
+          r.data().idShift
         );
         this.histories.push(clinicHistory);
       });

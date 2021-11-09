@@ -133,8 +133,11 @@ export class RequestShiftsComponent implements OnInit {
           speciality: this.speciality,
           date: this.getDateAndTime()[0],
           time: this.getDateAndTime()[1],
-          state: '',
-          commentary: ''
+          state: 'no realized',
+          commentary: '',
+          attention: '',
+          diagnosis: ''
+
         }).then(res => {
           console.log(res);
           window.location.reload();
@@ -153,8 +156,10 @@ export class RequestShiftsComponent implements OnInit {
         speciality: this.speciality,
         date: this.getDateAndTime()[0],
         time: this.getDateAndTime()[1],
-        state: '',
-        commentary: ''
+        state: 'no realized',
+        commentary: '',
+        attention: '',
+        diagnosis: ''
       }).then(res => {
         console.log(res);
         window.location.reload();

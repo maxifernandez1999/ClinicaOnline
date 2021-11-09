@@ -7,6 +7,7 @@ export class ClinicHistory {
       public patientName:string;
       public id:string;
       public specialistName:string;
+      public idShift:string;
 
       constructor(id:string,
                   height:number,
@@ -15,7 +16,8 @@ export class ClinicHistory {
                   pressure:number,
                   bloodType:string,
                   patientName:string,
-                  specialistName:string
+                  specialistName:string,
+                  idShift:string
                   ) {
       this.id = id;
       this.patientName = patientName;
@@ -25,6 +27,7 @@ export class ClinicHistory {
       this.pressure = pressure;
       this.bloodType = bloodType;
       this.specialistName = specialistName;
+      this.idShift = idShift;
             
       }
 }

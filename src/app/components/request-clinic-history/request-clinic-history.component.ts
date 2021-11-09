@@ -85,7 +85,7 @@ export class RequestClinicHistoryComponent implements OnInit {
     console.log(this.id)
     this.historyService
       .addHistory({
-        id: this.id,
+        idShift: this.id,
         height: this.Height,
         weight: this.Weight,
         temperature: this.Temperature,
