@@ -75,6 +75,9 @@ export class MyShiftsComponent implements OnInit {
     } else if (localStorage.hasOwnProperty('specialist')) {
       this.key = 'specialist';
       this.localStorageData = localStorage.getItem('specialist');
+    }else{
+      this.key = 'administrator';
+      this.localStorageData = localStorage.getItem('administrator');
     }
   }
 
@@ -159,9 +162,28 @@ export class MyShiftsComponent implements OnInit {
     });
   }
   getHistories(): void {
-    this.subscription = this.historyService.Histories.subscribe((res) => {
-      res.forEach((r) => {
-        if (r.data().patientName === this.name) {
+    if (this.key === 'patient') {
+      this.subscription = this.historyService.Histories.subscribe((res) => {
+        res.forEach((r) => {
+          if (r.data().patientName === this.name) {
+            let history: ClinicHistory = new ClinicHistory(
+              r.id,
+              r.data().height,
+              r.data().weight,
+              r.data().temperature,
+              r.data().pressure,
+              r.data().bloodType,
+              r.data().patientName,
+              r.data().specialistName,
+              r.data().idShift
+            );
+            this.histories.push(history);
+          }
+        });
+      });
+    } else if (this.key === 'specialist' || this.key === 'administrator') {
+      this.subscription = this.historyService.Histories.subscribe((res) => {
+        res.forEach((r) => {
           let history: ClinicHistory = new ClinicHistory(
             r.id,
             r.data().height,
@@ -174,9 +196,9 @@ export class MyShiftsComponent implements OnInit {
             r.data().idShift
           );
           this.histories.push(history);
-        }
+        });
       });
-    });
+    }
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -289,24 +311,6 @@ export class MyShiftsComponent implements OnInit {
     }, []);
   }
 
-  //
-  // getHistoriesHeight(): void {
-  //   this.historiesFields = this.histories.map(function (history) {
-  //     if(history.patientName === this.name){
-  //       return history.height;
-  //     }else{
-  //       return 0;
-  //     }
-
-  //   });
-
-  //   this.historiesFields = this.historiesFields.reduce((acc, item) => {
-  //     if (!acc.includes(item)) {
-  //       acc.push(item);
-  //     }
-  //     return acc;
-  //   }, []);
-  // }
   filterStates(shiftParam: string): void {
     this.shiftsFilter = this.shiftsFilter.filter((shift) => {
       if (shift.state === shiftParam) {
