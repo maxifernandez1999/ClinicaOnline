@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Administrator } from 'src/app/models/Administrator';
 import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
+import { EstadisticasService } from 'src/app/services/estadisticas.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -38,7 +39,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2,
     private fb: FormBuilder,
     private userService: UsersService,
-    private router: Router) {
+    private router: Router,
+    private estadisticaService:EstadisticasService) {
     this.siteKey = "6LcMtAcdAAAAAAgU0GIxs-ft9CwDIWApsINlvemG"
   }
 
@@ -373,6 +375,33 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   }
 
+  addEstadistica(user:string){
+    var f = new Date();
+    this.estadisticaService.addEstadistica({
+      user: user,
+      day: f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear(),
+      hour: f.getHours() + ':' + f.getMinutes() + ':' + f.getSeconds()
+    }).then(res => {
+      console.log(res);
+      this.router.navigate(['myShifts']);
+    }).catch(err => {
+      console.log(err);
+    });
+
+  }
+  addEstadisticaAdmin(user:string){
+    var f = new Date();
+    this.estadisticaService.addEstadistica({
+      user: user,
+      day: f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear(),
+      hour: f.getHours() + ':' + f.getMinutes() + ':' + f.getSeconds()
+    }).then(res => {
+      this.router.navigate(['admin']);
+    }).catch(err => {
+      console.log(err);
+    });
+
+  }
   addSpecialist() {
 
     this.userService.addSpecialist({
@@ -542,13 +571,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     if (this.isRegister() === "access" || this.isRegister() === "register") {
       if (this.isPatient) {
         localStorage.setItem("patient", JSON.stringify(this.currentUser));
-        this.router.navigate(['myShifts']);
+        this.addEstadistica(this.currentUser.firstName + ' ' + this.currentUser.lastName);
       }else if(this.isSpecialist){
         localStorage.setItem("specialist", JSON.stringify(this.currentUser));
-        this.router.navigate(['myShifts']);
+        this.addEstadistica(this.currentUser.firstName + ' ' + this.currentUser.lastName);
+        
       }else if(this.isAdministrator){
         localStorage.setItem("administrator", JSON.stringify(this.currentUser));
-        this.router.navigate(['admin']);
+        this.addEstadisticaAdmin(this.currentUser.firstName + ' ' + this.currentUser.lastName);
+
       }
       
     }else if(this.isRegister() === "no-access"){

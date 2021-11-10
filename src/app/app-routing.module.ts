@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
 import { ClinicHistoryComponent } from './components/clinic-history/clinic-history.component';
+import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
 import { MyShiftsComponent } from './components/my-shifts/my-shifts.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path:'history',
     component: ClinicHistoryComponent
+  },
+  {
+    path:'statistics',
+    component: EstadisticasComponent
   },
   {
     path:'patients',

@@ -22,6 +22,7 @@ import { ClinicHistoryComponent } from './components/clinic-history/clinic-histo
 import { RequestClinicHistoryComponent } from './components/request-clinic-history/request-clinic-history.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { PdfComponent } from './components/pdf/pdf.component';
+import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PdfComponent } from './components/pdf/pdf.component';
     ClinicHistoryComponent,
     RequestClinicHistoryComponent,
     PatientsComponent,
-    PdfComponent
+    PdfComponent,
+    EstadisticasComponent
   ],
   imports: [
     BrowserModule,
