@@ -92,6 +92,7 @@ export class MyShiftsComponent implements OnInit {
 
   logout() {
     localStorage.clear();
+    this.key = "";
     this.router.navigate(['register']);
   }
   getUserName(): void {
@@ -100,6 +101,7 @@ export class MyShiftsComponent implements OnInit {
       this.name = obj.firstName;
     }else if(this.key === 'specialist'){
       this.nameSpecialist = obj.firstName + ' ' +  obj.lastName;
+      this.name = obj.firstName;
     }else if(this.key === 'administrator'){
       this.nameAdmin = obj.firstName;
     }
@@ -191,6 +193,8 @@ export class MyShiftsComponent implements OnInit {
     } else if (this.key === 'specialist' || this.key === 'administrator') {
       this.subscription = this.historyService.Histories.subscribe((res) => {
         res.forEach((r) => {
+          console.log(r.data().specialistName)
+          console.log(this.nameSpecialist)
           if (r.data().specialistName === this.nameSpecialist) {
             let history: ClinicHistory = new ClinicHistory(
               r.id,
@@ -204,13 +208,17 @@ export class MyShiftsComponent implements OnInit {
               r.data().idShift
             );
             this.histories.push(history);
+            console.log(this.histories);
           }
         });
+        
       });
+      
+      
     }
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+
   }
 
   filterShifts() {
@@ -371,7 +379,7 @@ export class MyShiftsComponent implements OnInit {
       this.histories.forEach((history) => {
         console.log(shift.id);
         console.log(history.id);
-        if (shift.id === history.id) {
+        if (shift.id === history.idShift) {
           return true;
         } else {
           return false;

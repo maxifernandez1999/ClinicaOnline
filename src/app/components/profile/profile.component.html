@@ -1,6 +1,6 @@
 <button *ngIf="key === 'patient'" type="button" class="btn btn-danger m-3" (click)="
 logout()">Logout</button>
-<button type="button" class="btn btn-success m-3" (click)="
+<button *ngIf="key === 'patient'" type="button" class="btn btn-success m-3" (click)="
 goClinicHistory()">Clinic History</button>
 <br>
 

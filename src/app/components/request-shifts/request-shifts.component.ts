@@ -185,8 +185,8 @@ export class RequestShiftsComponent implements OnInit {
       if(this.selected){
         this.shiftsService.addShift({
           patientName: this.patientNameControl,
-          specialist: this.specialist,
-          speciality: this.speciality,
+          specialist: this.specialist.firstName + ' ' +this.specialist.lastName,
+          speciality: this.speciality.speciality,
           date: this.getDateAndTime()[0],
           time: this.getDateAndTime()[1],
           state: 'no realized',
