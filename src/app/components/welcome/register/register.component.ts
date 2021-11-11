@@ -284,7 +284,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
         break;
       case 'user6':
-        this.Email = "marado@gmail.com";
+        this.Email = "maradona@gmail.com";
         this.Password = 'marado';
         this.login();
 
@@ -412,6 +412,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       email: this.emailSpecialistControl,
       password: this.passwordSpecialistControl,
       speciality: this.specialityControl,
+      disponibility: '00 - 00',
       access: false,
       photo: this.filePath
     }).then(res => {
@@ -567,6 +568,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   login():void{
+    console.log(this.currentUser)
     console.log(this.isRegister())
     if (this.isRegister() === "access" || this.isRegister() === "register") {
       if (this.isPatient) {

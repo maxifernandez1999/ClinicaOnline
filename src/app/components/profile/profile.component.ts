@@ -79,25 +79,25 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  downloadFile():void{
-    if (this.key === 'patient') {
-      // this.userService.downloadFile(this.patient.photo).subscribe(res => {
-      //   console.log(res);
-      //   this.profileUrl = res;
-      // });
-    }else if(this.key === 'specialist'){
-      this.userService.downloadFile(this.specialist.photo).subscribe(res => {
-        console.log(res);
-        this.profileUrl = res;
-      });
-    }else if(this.key === 'administrator'){
-      this.userService.downloadFile(this.administrator.photo).subscribe(res => {
-        console.log(res);
-        this.profileUrl = res;
-      });
-    }
+  // downloadFile():void{
+  //   if (this.key === 'patient') {
+  //     // this.userService.downloadFile(this.patient.photo).subscribe(res => {
+  //     //   console.log(res);
+  //     //   this.profileUrl = res;
+  //     // });
+  //   }else if(this.key === 'specialist'){
+  //     this.userService.downloadFile(this.specialist.photo).subscribe(res => {
+  //       console.log(res);
+  //       this.profileUrl = res;
+  //     });
+  //   }else if(this.key === 'administrator'){
+  //     this.userService.downloadFile(this.administrator.photo).subscribe(res => {
+  //       console.log(res);
+  //       this.profileUrl = res;
+  //     });
+  //   }
     
-  }
+  // }
   getSpecialist():void{
     this.userService.Specialists.subscribe(res => {
       res.forEach(r => {
@@ -145,10 +145,13 @@ export class ProfileComponent implements OnInit {
     return false;
   }
   UpdateSpecialist():void{
+    console.log(this.specialist.id)
     let de = this.de.nativeElement.value;
     let hasta = this.hasta.nativeElement.value; 
-    this.userService.UpdateSpecialistProfile(this.specialist.id, de + '-' + hasta);
-    window.location.reload();
+    this.userService.UpdateSpecialistProfile(this.specialist.id, de + ' - ' + hasta).then(res =>{
+      window.location.reload();
+    })
+    
   }
 
 }

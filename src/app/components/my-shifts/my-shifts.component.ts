@@ -21,6 +21,8 @@ export class MyShiftsComponent implements OnInit {
     private historyService: HistoriesService
   ) {}
   name: string;
+  nameSpecialist:string;
+  nameAdmin:string;
   patient: Patient;
   ID: string;
   key: string;
@@ -94,9 +96,14 @@ export class MyShiftsComponent implements OnInit {
   }
   getUserName(): void {
     let obj = JSON.parse(this.localStorageData);
-    console.log(obj);
-    this.name = obj.firstName;
-    console.log(this.name);
+    if(this.key === 'patient'){
+      this.name = obj.firstName;
+    }else if(this.key === 'specialist'){
+      this.nameSpecialist = obj.firstName + ' ' +  obj.lastName;
+    }else if(this.key === 'administrator'){
+      this.nameAdmin = obj.firstName;
+    }
+    
   }
 
   seeReview(commentary: string): void {}
@@ -184,18 +191,20 @@ export class MyShiftsComponent implements OnInit {
     } else if (this.key === 'specialist' || this.key === 'administrator') {
       this.subscription = this.historyService.Histories.subscribe((res) => {
         res.forEach((r) => {
-          let history: ClinicHistory = new ClinicHistory(
-            r.id,
-            r.data().height,
-            r.data().weight,
-            r.data().temperature,
-            r.data().pressure,
-            r.data().bloodType,
-            r.data().patientName,
-            r.data().specialistName,
-            r.data().idShift
-          );
-          this.histories.push(history);
+          if (r.data().specialistName === this.nameSpecialist) {
+            let history: ClinicHistory = new ClinicHistory(
+              r.id,
+              r.data().height,
+              r.data().weight,
+              r.data().temperature,
+              r.data().pressure,
+              r.data().bloodType,
+              r.data().patientName,
+              r.data().specialistName,
+              r.data().idShift
+            );
+            this.histories.push(history);
+          }
         });
       });
     }

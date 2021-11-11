@@ -14,17 +14,17 @@ logout()">Logout</button>
                 </div>
                 <div #specialist class="form-group">
                     <h2>Specialists</h2>
-                    <button  *ngFor="let specialist of specialists" class="btn btn-success  m-3" (click)="getSpecialistSelected(specialist,$event)">{{specialist}}</button>
+                    <button  *ngFor="let specialist of specialists" class="btn btn-success  m-3" @enterState (click)="getSpecialistSelected(specialist,$event)">{{specialist.firstName + ' ' + specialist.lastName}}</button>
                 </div>
                 <div *ngIf="showSpecialities" class="form-group">
                     <h2>Specialities</h2>
-                    <button  *ngFor="let speciality of specialities" class="btn btn-info  m-3" (click)="getSpecialitySelected(speciality,$event)">{{speciality}}</button>
+                    <button  *ngFor="let sp of specialists" class="btn btn-info  m-3" (click)="getSpecialitySelected(sp,$event)">{{sp.speciality}}</button>
                   </div>
                 <div *ngIf="showShifts" class="form-group">
                     <h2>Available shifts</h2>
-                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">30/9 9:00</button>
-                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">25/9 12:00</button>
-                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">20/9 14:00</button>
+                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">25/11 {{disponibilityFormat[0]}}:15</button>
+                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">15/11 {{disponibilityFormat[1]}}:30</button>
+                    <button class="btn btn-secondary m-3" (click)="getShifts($event)">18/11 {{disponibilityFormat[2]}}:00</button>
                 </div>
                 <div class="form-group">
                     <input id="btn" type="button" (click)="addShift()" class="btn btn-primary" value="Submit" disabled>

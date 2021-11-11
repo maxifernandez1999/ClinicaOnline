@@ -6,12 +6,25 @@ import { Patient } from 'src/app/models/Patient';
 import { Specialist } from 'src/app/models/Specialist';
 import { ShiftsService } from 'src/app/services/shifts.service';
 import { UsersService } from 'src/app/services/users.service';
+import { trigger, style, transition, animate, state, animation } from '@angular/animations';
 /// <reference types="jquery" />
 
 @Component({
   selector: 'app-request-shifts',
   templateUrl: './request-shifts.component.html',
-  styleUrls: ['./request-shifts.component.scss']
+  styleUrls: ['./request-shifts.component.scss'],
+  animations: [
+    trigger('enterState',[
+      state('void',style({
+        transform: 'scale(1)',
+      })),
+      transition(':enter',[
+        animate(300,style({
+          transform: 'scale(1.3)',
+        }))
+      ])
+    ])
+  ]
 })
 export class RequestShiftsComponent implements OnInit {
 
@@ -19,15 +32,19 @@ export class RequestShiftsComponent implements OnInit {
   subscription:Subscription;
   isPatient:boolean = false;
   isAdmin:boolean = false;
-  specialist:string;
-  speciality:string;
-  specialities:string[] = [];
-  specialists:string[] = [];
+  specialist:Specialist;
+  speciality:Specialist;
+  specialities:Specialist[] = [];
+  specialists:Specialist[] = [];
   patientsName:string[] = [];
   showSpecialities:boolean = false;
   showShifts:boolean = false;
   ShiftAvailable:string;
   selected:boolean = false;
+  state:string = 'inactive';
+  disponibilities:string[] = [];
+  disponibilityFormat:number[] = [];
+  specialitiesString:string[] = [];
   constructor(private readonly shiftsService: ShiftsService,
               private fb:FormBuilder,
               private router:Router,
@@ -41,8 +58,12 @@ export class RequestShiftsComponent implements OnInit {
     this.getDataPatients();
     this.localStorageData();
     
+    
   }
 
+  togleButton(){
+    this.state = this.state === 'active' ? 'inactive' : 'active';
+  }
   get patientNameControl():any{
     return this.formShifts.get('patientName').value;
   }
@@ -51,21 +72,46 @@ export class RequestShiftsComponent implements OnInit {
     this.router.navigate(['register']);
   }
 
+  getDisponibilities(){
+    this.disponibilities = this.specialists.map(especialist => {
+      return especialist.disponibility;
+    })
+    let splice:string[] = this.disponibilities[0].split('-');
+    for (let index = 0; index < 3; index++) {
+      let number1:number = parseInt(splice[0],10);
+      let number2:number = parseInt(splice[1],10);
+      this.disponibilityFormat.push(this.getRandomArbitrary(number1,number2))
+      
+    }
+    
+    console.log(this.disponibilityFormat)
+  }
+  getRandomArbitrary(min, max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
   public get Form():any{
     return this.formShifts.controls;
   }
 
-  getSpecialistSelected(specialist:string,e:any):void{
+  getSpecialistSelected(specialist:Specialist,e:any):void{
     e.target.className = 'btn btn-danger m-3'
     $(".btn-success").prop('disabled', true);
     this.specialist = specialist;
+    this.filterSpecialities()
     this.showSpecialities = true;
   }
-  getSpecialitySelected(speciality:string,e:any):void{
+  getSpecialitySelected(speciality:Specialist,e:any):void{
     e.target.className = 'btn btn-danger m-3'
     $(".btn-info").prop('disabled', true);
     this.speciality = speciality;
+    this.getDisponibilities();
     this.showShifts = true
+    
+  }
+  filterSpecialities(){
+    this.specialists = this.specialists.filter(especialist => {
+      return especialist.speciality === this.specialist.speciality
+    })
   }
 
   getShifts(e:any):void{
@@ -107,8 +153,18 @@ export class RequestShiftsComponent implements OnInit {
   getData():void{
     this.userService.Specialists.subscribe(res => {
       res.forEach(r => {
-        this.specialities.push(r.data().speciality);
-        this.specialists.push(r.data().firstName + ' ' + r.data().lastName);
+        let specialist:Specialist = new Specialist(r.id,
+          r.data().firstName,
+          r.data().lastName,
+          r.data().age,
+          r.data().dni,
+          r.data().email,
+          r.data().password,
+          r.data().speciality,
+          r.data().access,
+          r.data().disponibility,
+          r.data().photo);
+          this.specialists.push(specialist);
       });
     });
   }

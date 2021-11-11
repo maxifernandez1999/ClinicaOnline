@@ -19,7 +19,7 @@ import { trigger, style, transition, animate, state, animation } from '@angular/
         }))
       ])
     ])
-  ],
+  ]
 })
 export class PdfComponent implements OnInit, OnChanges {
   @Input('elementoClinicHistory') elemento: HTMLElement;

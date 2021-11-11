@@ -11,9 +11,11 @@ export class RegisterAdminComponent implements OnInit {
 
   formAdmin : FormGroup;
   filesAdmin:any[] = [];
+  filePathReference:string;
+  filePath:string;
   constructor(private fb:FormBuilder,
               private userService:UsersService) { }
-
+         
   ngOnInit(): void {
     this.initForm();
   }
@@ -39,14 +41,6 @@ export class RegisterAdminComponent implements OnInit {
   public get Form():any{
     return this.formAdmin.controls;
   }
-  getFileAdmin(e:any):any{
-    console.log(e);
-    for (const file of e.target.files) {
-      this.filesAdmin.push(file);
-    }
-    
-    console.log(this.filesAdmin);
-  }
   addAdmin():void{
     this.userService.addAdministrator({
       firstName: this.firstNameControl,
@@ -54,28 +48,35 @@ export class RegisterAdminComponent implements OnInit {
       age: this.ageControl,
       dni: this.dniControl,
       email: this.emailControl,
-      password: this.passwordControl
+      password: this.passwordControl,
+      photo: this.filePath
     }).then(res => {
       console.log(res);
       alert("added");
     }).catch(err => {
       console.log(err);    
     });
-    this.UploadFile('administrators',this.filesAdmin);
   }
-  getFile(e:any):any{
+  getFileAdmin(e:any):any{
     console.log(e);
     for (const file of e.target.files) {
       this.filesAdmin.push(file);
     }
-    
-    console.log(this.filesAdmin);
   }
-  UploadFile(folder:string,files:any):void{
-    for (const file of files) {
-      this.userService.uploadFile(file,folder,this.emailControl,this.dniControl);
-      
+  UploadFileAdmin(): void {
+    for (const file of this.filesAdmin) {
+      this.filePathReference = `administrators/${this.emailControl}_${this.firstNameControl}.png`;
+      this.userService.uploadFile(file, "administrators", this.emailControl, this.firstNameControl).then(res => {
+        this.userService.downloadFile(this.filePathReference).subscribe(res => {
+          console.log(res);
+          this.filePath = res;
+          this.addAdmin();
+        });
+      })
+
+
     }
+
   }
   initForm():void{
     this.formAdmin = this.fb.group({
