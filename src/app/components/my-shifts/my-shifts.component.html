@@ -33,23 +33,23 @@
                         
                         <div *ngIf="key === 'patient' || key === 'specialist'" class="form-control">
                               <h3>Filter Height</h3>
-                              <input *ngFor="let ht of histories" type="button" (click)="filterHeight(ht.id)" class="btn btn-info m-3" value="{{ht.height}} cm">
+                              <input *ngFor="let ht of histories" type="button" (click)="filterHeight(ht.idShift)" class="btn btn-info m-3" value="{{ht.height}} cm">
                         </div>
                         <div *ngIf="key === 'patient' || key === 'specialist'" class="form-control">
                               <h3>Filter Weight</h3>
-                              <input *ngFor="let ht of histories" type="button" (click)="filterWeight(ht.id)" class="btn btn-info m-3" value="{{ht.weight}} kg">
+                              <input *ngFor="let ht of histories" type="button" (click)="filterWeight(ht.idShift)" class="btn btn-info m-3" value="{{ht.weight}} kg">
                         </div>
                         <div *ngIf="key === 'patient' || key === 'specialist'" class="form-control">
                               <h3>Filter Temperature</h3>
-                              <input *ngFor="let ht of histories" type="button" (click)="filterTemperature(ht.id)" class="btn btn-info m-3" value="{{ht.temperature}} °C">
+                              <input *ngFor="let ht of histories" type="button" (click)="filterTemperature(ht.idShift)" class="btn btn-info m-3" value="{{ht.temperature}} °C">
                         </div>
                         <div *ngIf="key === 'patient' || key === 'specialist'" class="form-control">
                               <h3>Filter Pressure</h3>
-                              <input *ngFor="let ht of histories" type="button" (click)="filterPressure(ht.id)" class="btn btn-info m-3" value="{{ht.pressure}}">
+                              <input *ngFor="let ht of histories" type="button" (click)="filterPressure(ht.idShift)" class="btn btn-info m-3" value="{{ht.pressure}}">
                         </div>
                         <div *ngIf="key === 'patient' || key === 'specialist'" class="form-control">
                               <h3>Filter Blood Type</h3>
-                              <input *ngFor="let ht of histories" type="button" (click)="filterBloodType(ht.id)" class="btn btn-info m-3" value="{{ht.bloodType}}">
+                              <input *ngFor="let ht of histories" type="button" (click)="filterBloodType(ht.idShift)" class="btn btn-info m-3" value="{{ht.bloodType}}">
                         </div>
                         
                         

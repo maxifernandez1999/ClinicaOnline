@@ -341,63 +341,27 @@ export class MyShiftsComponent implements OnInit {
   //
   filterHeight(shiftParam: string): void {
     this.shiftsFilter = this.shiftsFilter.filter((shift) => {
-      this.histories.forEach((history) => {
-        if (shift.id === history.id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+      return shift.id === shiftParam;
     });
   }
   filterWeight(shiftParam: string): void {
     this.shiftsFilter = this.shiftsFilter.filter((shift) => {
-      this.histories.forEach((history) => {
-        if (shift.id === history.id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+      return shift.id === shiftParam;
     });
   }
   filterTemperature(shiftParam: string): void {
     this.shiftsFilter = this.shiftsFilter.filter((shift) => {
-      this.histories.forEach((history) => {
-        console.log(shift.id);
-        console.log(history.id);
-        if (shift.id === history.id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+      return shift.id === shiftParam;
     });
   }
   filterPressure(shiftParam: string): void {
     this.shiftsFilter = this.shiftsFilter.filter((shift) => {
-      this.histories.forEach((history) => {
-        console.log(shift.id);
-        console.log(history.id);
-        if (shift.id === history.idShift) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+      return shift.id === shiftParam;
     });
   }
   filterBloodType(shiftParam: string): void {
     this.shiftsFilter = this.shiftsFilter.filter((shift) => {
-      this.histories.forEach((history) => {
-        console.log(shift.id);
-        console.log(history.id);
-        if (shift.id === history.id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+      return shift.id === shiftParam;
     });
   }
   //
